@@ -6,7 +6,7 @@
 // Platform Functions
 typedef float(*TimeFunc)(void);
 typedef void(*StopAudioFunc)(void*);
-typedef void*(*InitAudioFunc)(int, int, int);
+typedef void*(*InitAudioFunc)(int, int, int, int);
 
 // Types
 struct ShadertoyTestResource {

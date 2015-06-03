@@ -24,7 +24,7 @@ BOOL keys[256];
 BOOL active = TRUE;
 
 // Audio units (we know we only have SHADERTOY_MAX_CHANNELS + sound pass if exist
-XAudioUnit xaudio_units[SHADERTOY_MAX_CHANNELS + 1];
+DSoundUnit dsound_units[SHADERTOY_MAX_CHANNELS + 1];
 int xaudio_units_count = 0;
 
 // Shadertoy globals
@@ -46,12 +46,12 @@ float GetTimeNow() {
 }
 
 void StopAudio(void *sound) {
-    XAudioStop((XAudioUnit*)sound);
+    DSoundStop((DSoundUnit*)sound);
 }
 
-void* InitAudio(int channels, int sample_rate, int bits_per_sample) {
-    xaudio_units[xaudio_units_count % 5] = XAudioCreate(channels, sample_rate, bits_per_sample);
-    return (void*)&xaudio_units[xaudio_units_count++ % 5];
+void* InitAudio(int channels, int sample_rate, int bits_per_sample, int buffer_size) {
+    dsound_units[xaudio_units_count % 5] = DSoundCreate(channels, sample_rate, bits_per_sample, buffer_size);
+    return (void*)&dsound_units[xaudio_units_count++ % 5];
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -213,7 +213,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShow
     }
 
     // Systems init for shadertoy
-    XAudioInit();
+    DSoundInit(hWnd);
     
     // GL stuff
     GLenum err = glewInit();
@@ -264,23 +264,23 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShow
 
             // Sound output
             if (outputs.sound_enabled) {
-                XAudioUnit *unit = (XAudioUnit*)outputs.sound_data_param;
-                XAudioPlay(unit, outputs.sound_buffer_size, (BYTE*)outputs.sound_next_buffer);
-                inputs.sound_played_samples = XAudioGetPlayedSamples(unit);
+                DSoundUnit *unit = (DSoundUnit*)outputs.sound_data_param;
+                DSoundPlay(unit, outputs.sound_buffer_size, (BYTE*)outputs.sound_next_buffer);
+                inputs.sound_played_samples = DSoundGetPlayedSamples(unit);
             }
 
             // Audio outputs
             for (int i = 0; i < SHADERTOY_MAX_CHANNELS; ++i) {
                 if (outputs.music_enabled_channel[i]) {
-                    XAudioUnit *audio = (XAudioUnit*)outputs.music_data_param[i];
-                    if (!audio->is_playing) {
+                    DSoundUnit *audio = (DSoundUnit*)outputs.music_data_param[i];
+                    if (!DSoundIsPlaying(audio)) {
                         int size;
                         BYTE *data;
                         GetAudioInfo(i, &size, (void**)&data);
-                        XAudioPlay(audio, size, data);
+                        DSoundPlay(audio, size, data);
                     }
                     if (state.music_enabled_channel[i]) {
-                        inputs.audio_played_samples[i] = XAudioGetPlayedSamples(audio);
+                        inputs.audio_played_samples[i] = DSoundGetPlayedSamples(audio);
                     }
                 }
             }
@@ -297,7 +297,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShow
         SwapBuffers(hDC);
     }
 
-    XAudioShutdown(true);
+    DSoundShutdown();
     TestShutdown();
 
     return 0;

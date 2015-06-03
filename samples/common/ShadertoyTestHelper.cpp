@@ -34,7 +34,7 @@ void DummyStopAudio(void*) {
     assert(false);
 }
 
-void* DummyInitAudio(int, int, int) {
+void* DummyInitAudio(int, int, int, int) {
     assert(false);
     return NULL;
 }
@@ -122,7 +122,7 @@ void LoadTestChannel(ShadertoyTestResource *channel_data, ShadertoyState *state,
         ShadertoyAudio music = { &inputs->audio_played_samples[channel_id], &file->samples, (int)ogg_data->sample_rate, ogg_data->channels, file->samples_count / ogg_data->channels };
         ShadertoyLoadAudio(state, &music, SHADERTOY_IMAGE_PASS, channel_id);
 
-        outputs->music_data_param[channel_id] = init_audio(ogg_data->channels, ogg_data->sample_rate, 32);
+        outputs->music_data_param[channel_id] = init_audio(ogg_data->channels, ogg_data->sample_rate, 32, file->samples_count * sizeof(float));
 
         break;
     }
@@ -162,7 +162,8 @@ void LoadTest(ShadertoyTest *test, ShadertoyConfig *config, ShadertoyState *stat
             sound_resources[i] = channel_data->type;
         }
         ShadertoyLoadShader(state, test->sound.shader, sound_resources[0], sound_resources[1], sound_resources[2], sound_resources[3], SHADERTOY_SOUND_PASS);
-        outputs->sound_data_param = init_audio(2, 44100, 32);
+        const int double_buffering = 2;
+        outputs->sound_data_param = init_audio(2, 44100, 32, SHADERTOY_SOUND_BLOCK_SIZE * sizeof(float) * SHADERTOY_SOUND_AUDIO_CHANNELS * double_buffering);
     }
 
     test->start_time = time_now();
