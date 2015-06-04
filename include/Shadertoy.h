@@ -195,6 +195,7 @@ extern "C" {
         ShadertoyAudioSample *sound_next_buffer;
         int sound_buffer_size;
         void *sound_data_param;   // Pointer to platform specific data identifier for audio if needed
+        int sound_should_stop;
         int sound_enabled;
 
         void *music_data_param[SHADERTOY_MAX_CHANNELS];

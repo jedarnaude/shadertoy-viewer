@@ -721,6 +721,12 @@ ShadertoyRender(ShadertoyState *state, ShadertoyInputs *in, ShadertoyView *view,
     RenderImage(state, in, view);
     if (state->sound_enable) {
         RenderSound(state, in, out);
+
+        // TODO(jose): the >= is not nice, we should figure out a way to do it exactly.
+        // Inform that sound should stop
+        if (!out->sound_should_stop && (in->sound_played_samples >= state->sound_play_samples)) {
+            out->sound_should_stop = 1;
+        }
     }
 
     // Prepare special outputs

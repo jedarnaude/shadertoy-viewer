@@ -9,6 +9,10 @@ LPDIRECTSOUNDBUFFER primary_buffer = NULL;
 struct DSoundUnit {
     LPDIRECTSOUNDBUFFER buffer;
     WAVEFORMATEX wave_format;
+    DWORD buffer_size;
+    DWORD write_count;
+    DWORD previous_play_cursor;
+    DWORD play_byte_count;
     bool is_playing;
 };
 
@@ -74,6 +78,7 @@ DSoundCreate(WORD num_channels, DWORD sample_rate, WORD bits_per_sample, DWORD b
     output.wave_format.nAvgBytesPerSec = sample_rate * num_channels * bytes_per_sample;
     output.wave_format.nBlockAlign = (num_channels * bits_per_sample) / 8;
     output.wave_format.wBitsPerSample = bits_per_sample;
+    output.buffer_size = buffer_size;
 
     DSBUFFERDESC buffer_desc = {};
     buffer_desc.dwSize = sizeof(buffer_desc);
@@ -104,17 +109,19 @@ DSoundPlay(DSoundUnit *unit, UINT32 audio_bytes, BYTE* data) {
     if (unit->buffer->GetCurrentPosition(&play_position, &write_position) == DS_OK) {
         DWORD  audio_ptr1_bytes, audio_ptr2_bytes;
         LPVOID audio_ptr1, audio_ptr2;
-        unit->buffer->Lock(0, audio_bytes, &audio_ptr1, &audio_ptr1_bytes, &audio_ptr2, &audio_ptr2_bytes, DSBLOCK_FROMWRITECURSOR);
+
+        unit->buffer->Lock(unit->write_count % 2 ? unit->buffer_size / 2 : 0, audio_bytes, &audio_ptr1, &audio_ptr1_bytes, &audio_ptr2, &audio_ptr2_bytes, DSBLOCK_ENTIREBUFFER);
         
-        // TODO(jose): write position is advanced but only by a few samples as its point to a correct positino for us to write at, yet we already wrote enough info for several seconds.
-        // we should keep track of this in our DSoundUnit and report it back whenever we are handled a second buffer to work with.
         int bound_ptr1 = min(audio_ptr1_bytes, audio_bytes);
         memcpy(audio_ptr1, data, bound_ptr1);
+
+        int bound_ptr2 = 0;
         if (audio_ptr2 != NULL) {
-            int bound_ptr2 = audio_bytes - bound_ptr1;
+            bound_ptr2 = audio_bytes - bound_ptr1;
             memcpy(audio_ptr2, data + bound_ptr1, bound_ptr2);
         }        
-        unit->buffer->Unlock(audio_ptr1, audio_ptr1_bytes, audio_ptr2, audio_ptr2_bytes);
+        unit->buffer->Unlock(audio_ptr1, bound_ptr1, audio_ptr2, bound_ptr2);
+        unit->write_count++;
     }
 
     if (!unit->is_playing) {
@@ -141,5 +148,11 @@ DSoundGetPlayedSamples(DSoundUnit *unit) {
     
     DWORD current_play_cursor;
     unit->buffer->GetCurrentPosition(&current_play_cursor, NULL);
-	return current_play_cursor / unit->wave_format.nBlockAlign;
+
+    if (unit->previous_play_cursor > current_play_cursor) {
+        unit->play_byte_count += unit->buffer_size;
+    }
+    unit->previous_play_cursor = current_play_cursor;
+    DWORD total_byte_count = unit->play_byte_count + current_play_cursor;
+	return total_byte_count  / unit->wave_format.nBlockAlign;
 }

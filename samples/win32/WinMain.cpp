@@ -268,6 +268,9 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShow
                 DSoundPlay(unit, outputs.sound_buffer_size, (BYTE*)outputs.sound_next_buffer);
                 inputs.sound_played_samples = DSoundGetPlayedSamples(unit);
             }
+            if (outputs.sound_should_stop) {
+                DSoundStop((DSoundUnit*)outputs.sound_data_param);
+            }
 
             // Audio outputs
             for (int i = 0; i < SHADERTOY_MAX_CHANNELS; ++i) {
