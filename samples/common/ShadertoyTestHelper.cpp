@@ -76,7 +76,7 @@ void LoadTexture(ShadertoyState *state, const char *filename, ShadertoyPass pass
 }
 
 void LoadTestChannel(ShadertoyTestResource *channel_data, ShadertoyState *state, ShadertoyInputs *inputs, ShadertoyOutputs *outputs, ShadertoyPass pass, int channel_id) {
-    static const char *working_directory = "C:\\Users\\USER\\Documents\\Visual Studio 2015\\Projects\\ShadertoyCore\\Debug\\";
+    static const char *working_directory = "..\\..\\data\\";
     ImageFile *image = &image_files[channel_id][pass];
     memset(image->filepath, 0, sizeof(image->filepath));
 
