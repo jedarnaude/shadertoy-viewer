@@ -1,8 +1,7 @@
 #include "Shadertoy.h"
 #include "ShadertoyInternal.h"
 
-// TODO(jose): remove third party dependencies completely.
-#include "glew.h"
+#include "opengl_internal.h"
 #include "kiss_fft.h"
 
 // System headers
@@ -11,6 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <float.h>
+#include <limits.h>
 
 // Helper headers
 #include "MathHelpers.h"
@@ -247,7 +247,7 @@ CreateProgram(const char* vert_source, const char* frag_source) {
 * @param[in]	type	resource type.
 * @return	valid sampler type name, sampler2D is default.
 */
-static char*
+static const char*
 GetShaderUniformType(ResourceType type) {
 	return type == SHADERTOY_RESOURCE_CUBE_MAP ? "samplerCube" : "sampler2D";
 }
@@ -354,7 +354,7 @@ CreateFramebufferObject(ShadertoyResource *texture, ShadertoyResource *framebuff
  */
 static void
 BlitToTexture(ShadertoyResource *resource, GLvoid  *data) {
-    GLenum type = resource->size == 4 ? GL_RGBA : resource->size == 3 ? GL_RGB : GL_LUMINANCE;
+    GLenum type = resource->size == 4 ? GL_RGBA : resource->size == 3 ? GL_RGB : GL_RED;
     glTexImage2D(GL_TEXTURE_2D,
         0,
         type,
@@ -649,7 +649,7 @@ ShadertoyLoadTexture(ShadertoyState *state, Texture *in, ShadertoyResource *out)
         size = 3;
         break;
     case SHADERTOY_TEXTURE_FORMAT_LUMINANCE:
-        internal_format = format = GL_LUMINANCE;
+        internal_format = format = GL_RED;
         size = 1;
         break;
     default:
