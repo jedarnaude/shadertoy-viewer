@@ -12,46 +12,46 @@
 extern "C" {
 #endif
 
-    union ShadertoyIVec2 {
+    typedef union {
         struct {
             int x, y;
         };
         int xy[2];
-    };
+    } ShadertoyIVec2;
 
-    union ShadertoyVec2 {
+    typedef union {
         struct {
             float x, y;
         };
         float xy[2];
-    };
+    } ShadertoyVec2;
 
-    union ShadertoyVec3 {
+    typedef union {
         struct {
             float x, y, z;
         };
         float xyz[3];
-    };
+    } ShadertoyVec3;
 
-    union ShadertoyVec4 {
+    typedef union {
         struct {
             float x, y, z, w;
         };
         float xyzw[4];
-    };
+    } ShadertoyVec4;
 
-    struct ShadertoyAudio {
+    typedef struct {
         int64_t *played_samples;
         float **data;
         int frequency;
         int channel_count;
         int total_samples;
-    };
+    } ShadertoyAudio;
 
     /**
     * @warning	Must be zero initialized.
     */
-    struct ShadertoyResource {
+    typedef struct {
         unsigned id;
         int type;
         int size;
@@ -59,68 +59,68 @@ extern "C" {
         ShadertoyVec3 resolution;
         // TODO(jose): Think a bit more where to store this info
         ShadertoyAudio audio;
-    };
+    } ShadertoyResource;
 
-	struct ShadertoyKeyboard {
+	typedef struct {
         uint8_t state[SHADERTOY_KEYMAPS_COUNT];
         uint8_t toggle[SHADERTOY_KEYMAPS_COUNT];
-	};
+	} ShadertoyKeyboard;
 
-	struct ShadertoyView {
+	typedef struct {
         ShadertoyIVec2 min;
         ShadertoyIVec2 max;
-	};
+	} ShadertoyView;
 
-	enum ResourceType {
+	typedef enum {
         SHADERTOY_RESOURCE_NONE = 0,
         SHADERTOY_RESOURCE_TEXTURE = 1 << 0,
         SHADERTOY_RESOURCE_CUBE_MAP = 1 << 1,
         SHADERTOY_RESOURCE_KEYBOARD = 1 << 2,
         SHADERTOY_RESOURCE_MUSIC = 1 << 3,
-    };
+    } ResourceType;
 
-	enum TextureFormat {
+	typedef enum {
 		SHADERTOY_TEXTURE_FORMAT_RGBA,
 		SHADERTOY_TEXTURE_FORMAT_RGB,
         SHADERTOY_TEXTURE_FORMAT_LUMINANCE
-	};
+	} TextureFormat;
 
-    enum TextureFilter {
+    typedef enum {
         SHADERTOY_TEXTURE_FILTER_LINEAR,
         SHADERTOY_TEXTURE_FILTER_NEAREST,
-    };
+    } TextureFilter;
 
-	struct Texture {
+	typedef struct {
 		TextureFormat format;
         TextureFilter filter;
 		int width;
 		int height;
 		unsigned char* data;
-	};
+	} Texture;
 
-	enum Status {
+	typedef enum {
 		kFailure,
 		kSuccess,
-	};
+	} Status;
 
-    enum ShadertoyPass {
+    typedef enum {
         SHADERTOY_IMAGE_PASS,
         SHADERTOY_SOUND_PASS,
         SHADERTOY_PASSES_COUNT
-    };
+    } ShadertoyPass;
 
     /**
     * @todo	explain IEEE PCM sample setup
     */
-    struct ShadertoyAudioSample {
+    typedef struct {
         float left;
         float right;
-    };
+    } ShadertoyAudioSample;
 
     /**
 	 * @todo	explain config options
 	 */
-	struct ShadertoyConfig {
+	typedef struct {
 
         // TODO(jose): config rendering stuff (FBO output)
 
@@ -128,14 +128,47 @@ extern "C" {
         int sound_frequency;
         int sound_playtime;
         int sound_audio_channels;
-    };
+    } ShadertoyConfig;
+    
+    /**
+    * @todo    explain input structure
+    */
+    typedef struct {
+        ShadertoyKeyboard keyboard;
+
+        ShadertoyVec4 date;
+        ShadertoyVec4 mouse;
+        ShadertoyVec3 resolution;
+        float global_time;
+
+        // Sound related inputs
+        int64_t sound_played_samples;
+
+        // Audio sampled time
+        int64_t audio_played_samples[SHADERTOY_MAX_CHANNELS];
+    } ShadertoyInputs;
+
+    /**
+     * @todo    explain output structure
+     */
+    typedef struct {
+        ShadertoyAudioSample *sound_next_buffer;
+        int sound_buffer_size;
+        void *sound_data_param;   // Pointer to platform specific data identifier for audio if needed
+        int sound_should_stop;
+        int sound_enabled;
+
+        void *music_data_param[SHADERTOY_MAX_CHANNELS];
+        int music_enabled_channel[SHADERTOY_MAX_CHANNELS];
+        int music_enabled;
+    } ShadertoyOutputs;    
 
     /**
     * @todo	explain what is a shadertoy state.
     * keyboard = limited to one
     * music = any channel
     */
-    struct ShadertoyState {
+    typedef struct {
         // General stuff
         ShadertoyShader shader[SHADERTOY_PASSES_COUNT];
         ShadertoyResource channels[SHADERTOY_PASSES_COUNT][SHADERTOY_MAX_CHANNELS];
@@ -167,41 +200,8 @@ extern "C" {
 
         // Output link
         // TODO(jose): Is this a good internal dependency?
-        struct ShadertoyOutputs* outputs;
-    };
-
-    /**
-    * @todo    explain input structure
-    */
-    struct ShadertoyInputs {
-        ShadertoyKeyboard keyboard;
-
-        ShadertoyVec4 date;
-        ShadertoyVec4 mouse;
-        ShadertoyVec3 resolution;
-        float global_time;
-
-        // Sound related inputs
-        int64_t sound_played_samples;
-
-        // Audio sampled time
-        int64_t audio_played_samples[SHADERTOY_MAX_CHANNELS];
-    };
-
-    /**
-     * @todo    explain output structure
-     */
-    struct ShadertoyOutputs {
-        ShadertoyAudioSample *sound_next_buffer;
-        int sound_buffer_size;
-        void *sound_data_param;   // Pointer to platform specific data identifier for audio if needed
-        int sound_should_stop;
-        int sound_enabled;
-
-        void *music_data_param[SHADERTOY_MAX_CHANNELS];
-        int music_enabled_channel[SHADERTOY_MAX_CHANNELS];
-        int music_enabled;
-    };
+        ShadertoyOutputs* outputs;
+    } ShadertoyState;
 
 	/**
 	 * Init a ShadertoyState.

@@ -1,30 +1,30 @@
 #pragma once
 
 // TODO(jose): Move internal stuff to "hidden" header.
-struct ShadertoyShaderEmbed {
+typedef struct {
     const char *prefix;
     const char *sufix;
-};
+} ShadertoyShaderEmbed;
 
-enum ShadertoyUniformType {
+typedef enum {
     SHADERTOY_UNIFORM_VEC3,
     SHADERTOY_UNIFORM_VEC4,
     SHADERTOY_UNIFORM_FLOAT,
     SHADERTOY_UNIFORM_SAMPLER,
-};
+} ShadertoyUniformType;
 
-struct ShadertoyUniform {
+typedef struct {
     int location;
     ShadertoyUniformType type;
-};
+} ShadertoyUniform;
 
-struct ShadertoyChannel {
+typedef struct {
     ShadertoyUniform time;
     ShadertoyUniform resolution;
     ShadertoyUniform sample;
-};
+} ShadertoyChannel;
 
-struct ShadertoyShader {
+typedef struct {
     unsigned int program;
 
     ShadertoyUniform resolution;
@@ -35,4 +35,4 @@ struct ShadertoyShader {
     ShadertoyUniform block_offset;
 
     ShadertoyChannel channels[SHADERTOY_MAX_CHANNELS];
-};
+} ShadertoyShader;

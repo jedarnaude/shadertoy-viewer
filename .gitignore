@@ -3,6 +3,7 @@
 *.user
 *.sln.docstates
 .DS_Store
+xcuserdata
 
 # Build results
 [Dd]ebug/
