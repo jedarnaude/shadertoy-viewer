@@ -6,8 +6,43 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		ADBCFD401B23AF1600067F44 /* _kiss_fft_guts.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD371B23AF1600067F44 /* _kiss_fft_guts.h */; };
+		ADBCFD431B23AF1600067F44 /* glxew.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD3A1B23AF1600067F44 /* glxew.h */; };
+		ADBCFD441B23AF1600067F44 /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFD3B1B23AF1600067F44 /* kiss_fft.c */; };
+		ADBCFD451B23AF1600067F44 /* kiss_fft.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD3C1B23AF1600067F44 /* kiss_fft.h */; };
+		ADBCFD461B23AF1600067F44 /* MathHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD3D1B23AF1600067F44 /* MathHelpers.h */; };
+		ADBCFD471B23AF1600067F44 /* Shadertoy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFD3E1B23AF1600067F44 /* Shadertoy.cpp */; };
+		ADBCFD481B23AF1600067F44 /* wglew.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD3F1B23AF1600067F44 /* wglew.h */; };
+		ADBCFD4C1B23AF2600067F44 /* Shadertoy.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD491B23AF2600067F44 /* Shadertoy.h */; };
+		ADBCFD4D1B23AF2600067F44 /* ShadertoyConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD4A1B23AF2600067F44 /* ShadertoyConfig.h */; };
+		ADBCFD4E1B23AF2600067F44 /* ShadertoyInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD4B1B23AF2600067F44 /* ShadertoyInternal.h */; };
+		ADBCFD501B23AFD900067F44 /* opengl_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD4F1B23AFD900067F44 /* opengl_internal.h */; };
+		ADBCFD521B23B18400067F44 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBCFD511B23B18400067F44 /* OpenGL.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		ADBCFD2E1B23AEB700067F44 /* libshadertoy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libshadertoy.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADBCFD371B23AF1600067F44 /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _kiss_fft_guts.h; path = ../../../src/_kiss_fft_guts.h; sourceTree = "<group>"; };
+		ADBCFD3A1B23AF1600067F44 /* glxew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = glxew.h; path = ../../../src/glxew.h; sourceTree = "<group>"; };
+		ADBCFD3B1B23AF1600067F44 /* kiss_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = kiss_fft.c; path = ../../../src/kiss_fft.c; sourceTree = "<group>"; };
+		ADBCFD3C1B23AF1600067F44 /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kiss_fft.h; path = ../../../src/kiss_fft.h; sourceTree = "<group>"; };
+		ADBCFD3D1B23AF1600067F44 /* MathHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MathHelpers.h; path = ../../../src/MathHelpers.h; sourceTree = "<group>"; };
+		ADBCFD3E1B23AF1600067F44 /* Shadertoy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Shadertoy.cpp; path = ../../../src/Shadertoy.cpp; sourceTree = "<group>"; };
+		ADBCFD3F1B23AF1600067F44 /* wglew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wglew.h; path = ../../../src/wglew.h; sourceTree = "<group>"; };
+		ADBCFD491B23AF2600067F44 /* Shadertoy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = Shadertoy.h; path = ../../../include/Shadertoy.h; sourceTree = "<group>"; };
+		ADBCFD4A1B23AF2600067F44 /* ShadertoyConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShadertoyConfig.h; path = ../../../include/ShadertoyConfig.h; sourceTree = "<group>"; };
+		ADBCFD4B1B23AF2600067F44 /* ShadertoyInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShadertoyInternal.h; path = ../../../include/ShadertoyInternal.h; sourceTree = "<group>"; };
+		ADBCFD4F1B23AFD900067F44 /* opengl_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = opengl_internal.h; path = ../../../src/opengl_internal.h; sourceTree = "<group>"; };
+		ADBCFD511B23B18400067F44 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		ADBCFD5A1B23B22B00067F44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADBCFD5B1B23B22B00067F44 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		ADBCFD5C1B23B22B00067F44 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		ADBCFD5E1B23B22B00067F44 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		ADBCFD601B23B22B00067F44 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		ADBCFD631B23B22B00067F44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		ADBCFD6E1B23B22B00067F44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADBCFD6F1B23B22B00067F44 /* shadertoy_testTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = shadertoy_testTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -15,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADBCFD521B23B18400067F44 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -24,6 +60,11 @@
 		ADBCFD251B23AEB700067F44 = {
 			isa = PBXGroup;
 			children = (
+				ADBCFD511B23B18400067F44 /* OpenGL.framework */,
+				ADBCFD361B23AEF300067F44 /* src */,
+				ADBCFD351B23AEED00067F44 /* include */,
+				ADBCFD581B23B22B00067F44 /* shadertoy-test */,
+				ADBCFD6C1B23B22B00067F44 /* shadertoy-testTests */,
 				ADBCFD2F1B23AEB700067F44 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -36,6 +77,69 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		ADBCFD351B23AEED00067F44 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				ADBCFD491B23AF2600067F44 /* Shadertoy.h */,
+				ADBCFD4A1B23AF2600067F44 /* ShadertoyConfig.h */,
+				ADBCFD4B1B23AF2600067F44 /* ShadertoyInternal.h */,
+			);
+			name = include;
+			sourceTree = "<group>";
+		};
+		ADBCFD361B23AEF300067F44 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				ADBCFD4F1B23AFD900067F44 /* opengl_internal.h */,
+				ADBCFD371B23AF1600067F44 /* _kiss_fft_guts.h */,
+				ADBCFD3A1B23AF1600067F44 /* glxew.h */,
+				ADBCFD3B1B23AF1600067F44 /* kiss_fft.c */,
+				ADBCFD3C1B23AF1600067F44 /* kiss_fft.h */,
+				ADBCFD3D1B23AF1600067F44 /* MathHelpers.h */,
+				ADBCFD3E1B23AF1600067F44 /* Shadertoy.cpp */,
+				ADBCFD3F1B23AF1600067F44 /* wglew.h */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		ADBCFD581B23B22B00067F44 /* shadertoy-test */ = {
+			isa = PBXGroup;
+			children = (
+				ADBCFD5B1B23B22B00067F44 /* AppDelegate.h */,
+				ADBCFD5C1B23B22B00067F44 /* AppDelegate.m */,
+				ADBCFD601B23B22B00067F44 /* Images.xcassets */,
+				ADBCFD621B23B22B00067F44 /* MainMenu.xib */,
+				ADBCFD591B23B22B00067F44 /* Supporting Files */,
+			);
+			path = "shadertoy-test";
+			sourceTree = "<group>";
+		};
+		ADBCFD591B23B22B00067F44 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ADBCFD5A1B23B22B00067F44 /* Info.plist */,
+				ADBCFD5E1B23B22B00067F44 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ADBCFD6C1B23B22B00067F44 /* shadertoy-testTests */ = {
+			isa = PBXGroup;
+			children = (
+				ADBCFD6F1B23B22B00067F44 /* shadertoy_testTests.m */,
+				ADBCFD6D1B23B22B00067F44 /* Supporting Files */,
+			);
+			path = "shadertoy-testTests";
+			sourceTree = "<group>";
+		};
+		ADBCFD6D1B23B22B00067F44 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ADBCFD6E1B23B22B00067F44 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -43,6 +147,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADBCFD501B23AFD900067F44 /* opengl_internal.h in Headers */,
+				ADBCFD4D1B23AF2600067F44 /* ShadertoyConfig.h in Headers */,
+				ADBCFD431B23AF1600067F44 /* glxew.h in Headers */,
+				ADBCFD451B23AF1600067F44 /* kiss_fft.h in Headers */,
+				ADBCFD401B23AF1600067F44 /* _kiss_fft_guts.h in Headers */,
+				ADBCFD481B23AF1600067F44 /* wglew.h in Headers */,
+				ADBCFD461B23AF1600067F44 /* MathHelpers.h in Headers */,
+				ADBCFD4E1B23AF2600067F44 /* ShadertoyInternal.h in Headers */,
+				ADBCFD4C1B23AF2600067F44 /* Shadertoy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +199,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = ADBCFD251B23AEB700067F44;
 			productRefGroup = ADBCFD2F1B23AEB700067F44 /* Products */;
@@ -102,10 +216,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADBCFD471B23AF1600067F44 /* Shadertoy.cpp in Sources */,
+				ADBCFD441B23AF1600067F44 /* kiss_fft.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		ADBCFD621B23B22B00067F44 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ADBCFD631B23B22B00067F44 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		ADBCFD301B23AEB700067F44 /* Debug */ = {
