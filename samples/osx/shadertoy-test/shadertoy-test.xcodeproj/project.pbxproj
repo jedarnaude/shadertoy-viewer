@@ -1,0 +1,413 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		ADBCFD871B23B2A800067F44 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFD861B23B2A800067F44 /* AppDelegate.m */; };
+		ADBCFD891B23B2A800067F44 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFD881B23B2A800067F44 /* main.m */; };
+		ADBCFD8B1B23B2A800067F44 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADBCFD8A1B23B2A800067F44 /* Images.xcassets */; };
+		ADBCFD8E1B23B2A800067F44 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADBCFD8C1B23B2A800067F44 /* MainMenu.xib */; };
+		ADBCFD9A1B23B2A800067F44 /* shadertoy_testTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFD991B23B2A800067F44 /* shadertoy_testTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		ADBCFD941B23B2A800067F44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ADBCFD781B23B2A800067F44 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = ADBCFD7F1B23B2A800067F44;
+			remoteInfo = "shadertoy-test";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		ADBCFD801B23B2A800067F44 /* shadertoy-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "shadertoy-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADBCFD841B23B2A800067F44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADBCFD851B23B2A800067F44 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		ADBCFD861B23B2A800067F44 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		ADBCFD881B23B2A800067F44 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		ADBCFD8A1B23B2A800067F44 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		ADBCFD8D1B23B2A800067F44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		ADBCFD931B23B2A800067F44 /* shadertoy-testTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "shadertoy-testTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADBCFD981B23B2A800067F44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ADBCFD991B23B2A800067F44 /* shadertoy_testTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = shadertoy_testTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ADBCFD7D1B23B2A800067F44 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADBCFD901B23B2A800067F44 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ADBCFD771B23B2A800067F44 = {
+			isa = PBXGroup;
+			children = (
+				ADBCFD821B23B2A800067F44 /* shadertoy-test */,
+				ADBCFD961B23B2A800067F44 /* shadertoy-testTests */,
+				ADBCFD811B23B2A800067F44 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ADBCFD811B23B2A800067F44 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ADBCFD801B23B2A800067F44 /* shadertoy-test.app */,
+				ADBCFD931B23B2A800067F44 /* shadertoy-testTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ADBCFD821B23B2A800067F44 /* shadertoy-test */ = {
+			isa = PBXGroup;
+			children = (
+				ADBCFD851B23B2A800067F44 /* AppDelegate.h */,
+				ADBCFD861B23B2A800067F44 /* AppDelegate.m */,
+				ADBCFD8A1B23B2A800067F44 /* Images.xcassets */,
+				ADBCFD8C1B23B2A800067F44 /* MainMenu.xib */,
+				ADBCFD831B23B2A800067F44 /* Supporting Files */,
+			);
+			path = "shadertoy-test";
+			sourceTree = "<group>";
+		};
+		ADBCFD831B23B2A800067F44 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ADBCFD841B23B2A800067F44 /* Info.plist */,
+				ADBCFD881B23B2A800067F44 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ADBCFD961B23B2A800067F44 /* shadertoy-testTests */ = {
+			isa = PBXGroup;
+			children = (
+				ADBCFD991B23B2A800067F44 /* shadertoy_testTests.m */,
+				ADBCFD971B23B2A800067F44 /* Supporting Files */,
+			);
+			path = "shadertoy-testTests";
+			sourceTree = "<group>";
+		};
+		ADBCFD971B23B2A800067F44 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				ADBCFD981B23B2A800067F44 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ADBCFD7F1B23B2A800067F44 /* shadertoy-test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADBCFD9D1B23B2A800067F44 /* Build configuration list for PBXNativeTarget "shadertoy-test" */;
+			buildPhases = (
+				ADBCFD7C1B23B2A800067F44 /* Sources */,
+				ADBCFD7D1B23B2A800067F44 /* Frameworks */,
+				ADBCFD7E1B23B2A800067F44 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "shadertoy-test";
+			productName = "shadertoy-test";
+			productReference = ADBCFD801B23B2A800067F44 /* shadertoy-test.app */;
+			productType = "com.apple.product-type.application";
+		};
+		ADBCFD921B23B2A800067F44 /* shadertoy-testTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADBCFDA01B23B2A800067F44 /* Build configuration list for PBXNativeTarget "shadertoy-testTests" */;
+			buildPhases = (
+				ADBCFD8F1B23B2A800067F44 /* Sources */,
+				ADBCFD901B23B2A800067F44 /* Frameworks */,
+				ADBCFD911B23B2A800067F44 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ADBCFD951B23B2A800067F44 /* PBXTargetDependency */,
+			);
+			name = "shadertoy-testTests";
+			productName = "shadertoy-testTests";
+			productReference = ADBCFD931B23B2A800067F44 /* shadertoy-testTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ADBCFD781B23B2A800067F44 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = beautypi;
+				TargetAttributes = {
+					ADBCFD7F1B23B2A800067F44 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					ADBCFD921B23B2A800067F44 = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = ADBCFD7F1B23B2A800067F44;
+					};
+				};
+			};
+			buildConfigurationList = ADBCFD7B1B23B2A800067F44 /* Build configuration list for PBXProject "shadertoy-test" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ADBCFD771B23B2A800067F44;
+			productRefGroup = ADBCFD811B23B2A800067F44 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ADBCFD7F1B23B2A800067F44 /* shadertoy-test */,
+				ADBCFD921B23B2A800067F44 /* shadertoy-testTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ADBCFD7E1B23B2A800067F44 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADBCFD8B1B23B2A800067F44 /* Images.xcassets in Resources */,
+				ADBCFD8E1B23B2A800067F44 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADBCFD911B23B2A800067F44 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ADBCFD7C1B23B2A800067F44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADBCFD891B23B2A800067F44 /* main.m in Sources */,
+				ADBCFD871B23B2A800067F44 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ADBCFD8F1B23B2A800067F44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADBCFD9A1B23B2A800067F44 /* shadertoy_testTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ADBCFD951B23B2A800067F44 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = ADBCFD7F1B23B2A800067F44 /* shadertoy-test */;
+			targetProxy = ADBCFD941B23B2A800067F44 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		ADBCFD8C1B23B2A800067F44 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ADBCFD8D1B23B2A800067F44 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		ADBCFD9B1B23B2A800067F44 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		ADBCFD9C1B23B2A800067F44 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		ADBCFD9E1B23B2A800067F44 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "shadertoy-test/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		ADBCFD9F1B23B2A800067F44 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "shadertoy-test/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		ADBCFDA11B23B2A800067F44 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "shadertoy-testTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/shadertoy-test.app/Contents/MacOS/shadertoy-test";
+			};
+			name = Debug;
+		};
+		ADBCFDA21B23B2A800067F44 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "shadertoy-testTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/shadertoy-test.app/Contents/MacOS/shadertoy-test";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ADBCFD7B1B23B2A800067F44 /* Build configuration list for PBXProject "shadertoy-test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADBCFD9B1B23B2A800067F44 /* Debug */,
+				ADBCFD9C1B23B2A800067F44 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ADBCFD9D1B23B2A800067F44 /* Build configuration list for PBXNativeTarget "shadertoy-test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADBCFD9E1B23B2A800067F44 /* Debug */,
+				ADBCFD9F1B23B2A800067F44 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		ADBCFDA01B23B2A800067F44 /* Build configuration list for PBXNativeTarget "shadertoy-testTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADBCFDA11B23B2A800067F44 /* Debug */,
+				ADBCFDA21B23B2A800067F44 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = ADBCFD781B23B2A800067F44 /* Project object */;
+}
