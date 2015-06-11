@@ -467,7 +467,7 @@ static void
 ProcessSound(int block_offset, int sample_rate, ShadertoyShader *shader, ShadertoyAudioSample *samples) {
     // Process audio on GL
     UploadUniform(shader->block_offset, (float)block_offset / sample_rate);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
     glReadPixels(0, 0, SHADERTOY_SOUND_TEXTURE_WIDTH, SHADERTOY_SOUND_TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, sound_readpixels_buffer);
 
     // Copy to output

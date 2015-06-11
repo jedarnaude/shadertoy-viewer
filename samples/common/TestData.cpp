@@ -2,6 +2,7 @@
 
 static ShadertoyTest mouse_test = {
     "Mouse test.",
+    // https://www.shadertoy.com/view/Mss3zH
     // Image pass
     {
         R"(

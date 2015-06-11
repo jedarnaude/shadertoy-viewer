@@ -4,7 +4,7 @@
 #include "imgui.h"
 
 #ifdef __OBJC__
-#include <AppKit/AppKit.h>
+#import <AppKit/AppKit.h>
 NSEvent* ImGuiEventMonitor(NSEvent *event);
 #endif
 

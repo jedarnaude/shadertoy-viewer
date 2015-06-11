@@ -17,6 +17,7 @@
 }
 
 - (void) drawFrame;
+- (NSPoint)getMousePosition:(NSEvent *)event;
 
 @end
 
@@ -109,20 +110,62 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     [self addTrackingArea:trackingArea];
 }
 
+- (BOOL)acceptsFirstResponder {
+    return YES;
+}
+
+- (void)keyDown:(NSEvent *)event {
+    // TODO(jose): Unfortunately it seems OSX doesn't offer us a easy way on this.
+    // If someone knows any solution that is not a lookup table ping me, otherwise I will eventually do a lookup table.
+    unsigned short keycode = [event keyCode];
+    if (keycode < 256) {
+        inputs.keyboard.toggle[keycode] = ~inputs.keyboard.toggle[keycode];
+        inputs.keyboard.state[keycode] = 0xff;
+    }
+}
+
+- (void)keyUp:(NSEvent *)event {
+    unsigned short keycode = [event keyCode];
+    if (keycode < 256) {
+        inputs.keyboard.state[keycode] = 0;
+    }
+}
+
+- (NSPoint)getMousePosition:(NSEvent *)event {
+    NSRect rect = [[[event window] contentView] frame];
+    NSPoint point = [event locationInWindow];
+    point.y = rect.size.height - point.y;
+    return point;
+}
+
 - (void)mouseDown:(NSEvent *)event {
     ImGuiEventMonitor(event);
+    if ([event type] == NSLeftMouseDown) {
+        NSPoint point = [self getMousePosition:event];
+        inputs.mouse.z = (float)point.x;
+        inputs.mouse.w = (float)(inputs.resolution.y - point.y);
+    }
 }
 
 - (void)mouseUp:(NSEvent *)event {
     ImGuiEventMonitor(event);
+    if ([event type] == NSLeftMouseUp) {
+        inputs.mouse.z = (float)-fabs(inputs.mouse.z);
+        inputs.mouse.w = (float)-fabs(inputs.mouse.w);
+    }
 }
 
 - (void)mouseMoved:(NSEvent *)event {
     ImGuiEventMonitor(event);
+    if ([NSEvent pressedMouseButtons] & 1) {
+        NSPoint point = [self getMousePosition:event];
+        inputs.mouse.x = (float)point.x;
+        inputs.mouse.y = (float)(inputs.resolution.y - point.y);
+    }
 }
 
 - (void)mouseDragged:(NSEvent *)event {
-    ImGuiEventMonitor(event);
+    [self mouseMoved:event];
 }
 
 - (void)scrollWheel:(NSEvent *)event {

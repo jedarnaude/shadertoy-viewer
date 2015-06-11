@@ -2,6 +2,7 @@
 #define shadertoy_test_NSGLView_h
 
 #import <Cocoa/Cocoa.h>
+#import <AppKit/AppKit.h>
 #import <QuartzCore/CVDisplayLink.h>
 
 @interface GLView : NSOpenGLView {

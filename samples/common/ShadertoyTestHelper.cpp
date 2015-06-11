@@ -207,7 +207,7 @@ bool GUITestSelection(bool show_selection, ShadertoyTestInfo *info, ShadertoyTes
 
 void GUITestOverlay(bool show_overlay, ShadertoyTest *test, ShadertoyState *state, ShadertoyInputs *inputs) {
     ImGui::SetNextWindowPos(ImVec2(10, 10));
-    if (!ImGui::Begin("GUI Overlay", &show_overlay, ImVec2(0, 0), 0.3f, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings))
+    if (!ImGui::Begin("GUI Overlay", &show_overlay, ImVec2(0, 0), 0.3f, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize))
     {
         ImGui::End();
         return;
