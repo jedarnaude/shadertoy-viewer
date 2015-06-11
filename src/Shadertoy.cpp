@@ -23,13 +23,9 @@ static kiss_fft_cpx fft_out[FFT_SIZE];
 static GLubyte sound_readpixels_buffer[SHADERTOY_SOUND_BLOCK_SIZE * 4];
 
 static const char vertex_source[] = R"(
-	attribute vec4 vPosition;
-	attribute vec2 vTexcoords;
-	
-	varying vec2 oTexcoords;
+	attribute vec2 vPosition;
 	void main() {
-		oTexcoords = vTexcoords;
-		gl_Position = vPosition;
+		gl_Position = vec4(vPosition, 0.0, 1.0);
 	}
 )";
 
@@ -133,10 +129,10 @@ private:
 };
 
 static GLfloat vertices[] = {
-	-1.f, -1.f, 0.f,
-	-1.f,  1.f, 0.f,
-	1.f,  1.f, 0.f,
-	1.f, -1.f, 0.f,
+	-1.f, -1.f,
+	-1.f,  1.f,
+	1.f,  1.f,
+	1.f, -1.f,
 };
 
 static GLubyte indices[] = {
@@ -172,6 +168,15 @@ void UploadUniform(ShadertoyUniform& uniform, int value) {
     glUniform1i(uniform.location, value);
 }
 
+static const char*
+GetShaderType(GLint type) {
+    switch (type) {
+    case GL_VERTEX_SHADER:    return "vertex";
+    case GL_FRAGMENT_SHADER:  return "fragment";
+    }
+    return "unknown";
+}
+
 /**
  * Compiles a source shader based on requested type.
  *
@@ -191,7 +196,7 @@ CompileShader(const char* source, GLint type) {
 	if (log_lenght > 1) {
         ShadertoyBuffer buffer(log_lenght);
 		glGetShaderInfoLog(shader, log_lenght, NULL, buffer.data);
-		printf("LOG: \n %s", buffer.data);
+		printf("LOG %s: \n %s", GetShaderType(type), buffer.data);
 	}
 
 	GLint status;
@@ -226,7 +231,7 @@ CreateProgram(const char* vert_source, const char* frag_source) {
 	if (log_lenght > 1) {
         ShadertoyBuffer buffer(log_lenght);
         glGetProgramInfoLog(program, log_lenght, nullptr, buffer.data);
-		printf("LOG: \n %s", buffer.data);
+		printf("LOG link: \n %s", buffer.data);
 	}
 
 	GLint status;
@@ -263,17 +268,17 @@ GetShaderUniformType(ResourceType type) {
  */
 static void
 GetShaderSource(const char *prefix, const char *source, const char *suffix, ResourceType channels[SHADERTOY_MAX_CHANNELS], ShadertoyBuffer* buffer) {
-    int prefix_size = strlen(prefix);
-    int source_size = strlen(source);
-    int suffix_size = strlen(suffix);
+    size_t prefix_size = strlen(prefix);
+    size_t source_size = strlen(source);
+    size_t suffix_size = strlen(suffix);
 
     // Generate correct prefix
-    ShadertoyBuffer final_prefix(prefix_size * 2);
+    ShadertoyBuffer final_prefix((int)prefix_size * 2);
     sprintf(final_prefix.data, prefix, GetShaderUniformType(channels[0]), GetShaderUniformType(channels[1]), GetShaderUniformType(channels[2]), GetShaderUniformType(channels[3]));
-    int final_prefix_size = strlen(final_prefix.data);
+    size_t final_prefix_size = strlen(final_prefix.data);
 
     // Copy strings
-    buffer->Reset(final_prefix_size + source_size + suffix_size + 1);
+    buffer->Reset((int)(final_prefix_size + source_size + suffix_size + 1));
     strcpy(buffer->data, final_prefix.data);
     strcpy(buffer->data + final_prefix_size, source);
     strcpy(buffer->data + final_prefix_size + source_size, suffix);
@@ -288,7 +293,7 @@ GetShaderSource(const char *prefix, const char *source, const char *suffix, Reso
  */
 static Status
 CreateShader(const char *source, ShadertoyShader *shader) {
-	memset(shader, 0, sizeof(shader));
+	memset(shader, 0, sizeof(*shader));
 
 	GLuint program = CreateProgram(vertex_source, source);
 
@@ -306,9 +311,9 @@ CreateShader(const char *source, ShadertoyShader *shader) {
     shader->block_offset = { glGetUniformLocation(program, "iBlockOffset"), SHADERTOY_UNIFORM_FLOAT };
 
     for (int i = 0; i < SHADERTOY_MAX_CHANNELS; ++i) {
-		char *channel = NULL;
-		char *resolution = NULL;
-		char *time = NULL;
+		char const *channel = NULL;
+		char const *resolution = NULL;
+		char const *time = NULL;
 		switch (i) {
 		case 0:	channel = "iChannel0";	resolution = "iChannelResolution[0]"; time = "iChannelTime[0]"; break;
 		case 1:	channel = "iChannel1";	resolution = "iChannelResolution[1]"; time = "iChannelTime[1]"; break;
@@ -431,7 +436,7 @@ ProcessAudio(ShadertoyAudio *audio, uint8_t *out) {
 
 	// Spectrum
 	// Convert from linear magnitude to unsigned-byte decibels.
-	const double rangeScaleFactor = SHADERTOY_AUDIO_MAX_DECIBELS == SHADERTOY_AUDIO_MIN_DECIBELS ? 1.0 : 1.0 / (SHADERTOY_AUDIO_MAX_DECIBELS - SHADERTOY_AUDIO_MIN_DECIBELS);
+	const double rangeScaleFactor = 1.0 / (SHADERTOY_AUDIO_MAX_DECIBELS - SHADERTOY_AUDIO_MIN_DECIBELS);
 	const double minDecibels = SHADERTOY_AUDIO_MIN_DECIBELS;
 
 	for (unsigned i = 0; i < FFT_SIZE / 2; ++i) {
@@ -462,7 +467,7 @@ static void
 ProcessSound(int block_offset, int sample_rate, ShadertoyShader *shader, ShadertoyAudioSample *samples) {
     // Process audio on GL
     UploadUniform(shader->block_offset, (float)block_offset / sample_rate);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0);
     glReadPixels(0, 0, SHADERTOY_SOUND_TEXTURE_WIDTH, SHADERTOY_SOUND_TEXTURE_HEIGHT, GL_RGBA, GL_UNSIGNED_BYTE, sound_readpixels_buffer);
 
     // Copy to output
@@ -576,8 +581,6 @@ RenderSound(ShadertoyState *state, ShadertoyInputs *in, ShadertoyOutputs *out) {
     Texture *texture = &state->sound_texture;
 
     glBindFramebuffer(GL_FRAMEBUFFER, state->sound_fbo.id);
-
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glViewport(0, 0, texture->width, texture->height);
@@ -688,6 +691,9 @@ ShadertoyInit(ShadertoyConfig *config, ShadertoyState *state, ShadertoyInputs *i
 
     // TODO(jose): OpenGL extensions specifics
     state->image_fbo.id = 0;
+    
+    // Clear color
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	return result;
 }
@@ -716,7 +722,7 @@ Status
 ShadertoyRender(ShadertoyState *state, ShadertoyInputs *in, ShadertoyView *view, ShadertoyOutputs *out) {
     // Enable vertex attribs (redundant but this way we are "stateless")
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, 0, 0, vertices);
+    glVertexAttribPointer(0, 2, GL_FLOAT, 0, 0, vertices);
 
     RenderImage(state, in, view);
     if (state->sound_enable) {

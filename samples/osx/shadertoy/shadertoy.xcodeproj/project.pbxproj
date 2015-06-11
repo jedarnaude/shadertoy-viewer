@@ -8,12 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		ADBCFD401B23AF1600067F44 /* _kiss_fft_guts.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD371B23AF1600067F44 /* _kiss_fft_guts.h */; };
-		ADBCFD431B23AF1600067F44 /* glxew.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD3A1B23AF1600067F44 /* glxew.h */; };
 		ADBCFD441B23AF1600067F44 /* kiss_fft.c in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFD3B1B23AF1600067F44 /* kiss_fft.c */; };
 		ADBCFD451B23AF1600067F44 /* kiss_fft.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD3C1B23AF1600067F44 /* kiss_fft.h */; };
 		ADBCFD461B23AF1600067F44 /* MathHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD3D1B23AF1600067F44 /* MathHelpers.h */; };
 		ADBCFD471B23AF1600067F44 /* Shadertoy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFD3E1B23AF1600067F44 /* Shadertoy.cpp */; };
-		ADBCFD481B23AF1600067F44 /* wglew.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD3F1B23AF1600067F44 /* wglew.h */; };
 		ADBCFD4C1B23AF2600067F44 /* Shadertoy.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD491B23AF2600067F44 /* Shadertoy.h */; };
 		ADBCFD4D1B23AF2600067F44 /* ShadertoyConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD4A1B23AF2600067F44 /* ShadertoyConfig.h */; };
 		ADBCFD4E1B23AF2600067F44 /* ShadertoyInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = ADBCFD4B1B23AF2600067F44 /* ShadertoyInternal.h */; };
@@ -24,12 +22,10 @@
 /* Begin PBXFileReference section */
 		ADBCFD2E1B23AEB700067F44 /* libshadertoy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libshadertoy.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADBCFD371B23AF1600067F44 /* _kiss_fft_guts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = _kiss_fft_guts.h; path = ../../../src/_kiss_fft_guts.h; sourceTree = "<group>"; };
-		ADBCFD3A1B23AF1600067F44 /* glxew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = glxew.h; path = ../../../src/glxew.h; sourceTree = "<group>"; };
 		ADBCFD3B1B23AF1600067F44 /* kiss_fft.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = kiss_fft.c; path = ../../../src/kiss_fft.c; sourceTree = "<group>"; };
 		ADBCFD3C1B23AF1600067F44 /* kiss_fft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kiss_fft.h; path = ../../../src/kiss_fft.h; sourceTree = "<group>"; };
 		ADBCFD3D1B23AF1600067F44 /* MathHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MathHelpers.h; path = ../../../src/MathHelpers.h; sourceTree = "<group>"; };
 		ADBCFD3E1B23AF1600067F44 /* Shadertoy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Shadertoy.cpp; path = ../../../src/Shadertoy.cpp; sourceTree = "<group>"; };
-		ADBCFD3F1B23AF1600067F44 /* wglew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wglew.h; path = ../../../src/wglew.h; sourceTree = "<group>"; };
 		ADBCFD491B23AF2600067F44 /* Shadertoy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = Shadertoy.h; path = ../../../include/Shadertoy.h; sourceTree = "<group>"; };
 		ADBCFD4A1B23AF2600067F44 /* ShadertoyConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShadertoyConfig.h; path = ../../../include/ShadertoyConfig.h; sourceTree = "<group>"; };
 		ADBCFD4B1B23AF2600067F44 /* ShadertoyInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShadertoyInternal.h; path = ../../../include/ShadertoyInternal.h; sourceTree = "<group>"; };
@@ -92,12 +88,10 @@
 			children = (
 				ADBCFD4F1B23AFD900067F44 /* opengl_internal.h */,
 				ADBCFD371B23AF1600067F44 /* _kiss_fft_guts.h */,
-				ADBCFD3A1B23AF1600067F44 /* glxew.h */,
 				ADBCFD3B1B23AF1600067F44 /* kiss_fft.c */,
 				ADBCFD3C1B23AF1600067F44 /* kiss_fft.h */,
 				ADBCFD3D1B23AF1600067F44 /* MathHelpers.h */,
 				ADBCFD3E1B23AF1600067F44 /* Shadertoy.cpp */,
-				ADBCFD3F1B23AF1600067F44 /* wglew.h */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -149,10 +143,8 @@
 			files = (
 				ADBCFD501B23AFD900067F44 /* opengl_internal.h in Headers */,
 				ADBCFD4D1B23AF2600067F44 /* ShadertoyConfig.h in Headers */,
-				ADBCFD431B23AF1600067F44 /* glxew.h in Headers */,
 				ADBCFD451B23AF1600067F44 /* kiss_fft.h in Headers */,
 				ADBCFD401B23AF1600067F44 /* _kiss_fft_guts.h in Headers */,
-				ADBCFD481B23AF1600067F44 /* wglew.h in Headers */,
 				ADBCFD461B23AF1600067F44 /* MathHelpers.h in Headers */,
 				ADBCFD4E1B23AF2600067F44 /* ShadertoyInternal.h in Headers */,
 				ADBCFD4C1B23AF2600067F44 /* Shadertoy.h in Headers */,
@@ -344,6 +336,7 @@
 				ADBCFD341B23AEB700067F44 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

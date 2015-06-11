@@ -25,7 +25,7 @@ struct AudioFile {
 };
 
 // We should never use these functions
-float DummyTime() {
+double DummyTime() {
     assert(false);
     return 0.0f;
 }
@@ -76,7 +76,7 @@ void LoadTexture(ShadertoyState *state, const char *filename, ShadertoyPass pass
 }
 
 void LoadTestChannel(ShadertoyTestResource *channel_data, ShadertoyState *state, ShadertoyInputs *inputs, ShadertoyOutputs *outputs, ShadertoyPass pass, int channel_id) {
-    static const char *working_directory = "..\\..\\data\\";
+    static const char *working_directory = "/Users/jedarnaude/Workspace/personal/shadertoy/samples/data/";
     ImageFile *image = &image_files[channel_id][pass];
     memset(image->filepath, 0, sizeof(image->filepath));
 

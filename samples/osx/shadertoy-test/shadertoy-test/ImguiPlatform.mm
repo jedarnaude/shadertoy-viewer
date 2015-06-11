@@ -30,10 +30,13 @@ NSEvent* ImGuiEventMonitor(NSEvent *event) {
     case NSScrollWheel:
         io.MouseWheel += [event deltaY] > 0 ? +1.0f : -1.0f;
         break;
+    case NSLeftMouseDragged:
     case NSMouseMoved: {
+        NSRect rect = [[[event window] contentView] frame];
+        NSRect converted = [[event window] convertRectToScreen:rect];
         NSPoint point = [NSEvent mouseLocation];
-        io.MousePos.x = (signed short)(point.x);
-        io.MousePos.y = (signed short)(point.y);
+        io.MousePos.x = (signed short)(point.x - converted.origin.x);
+        io.MousePos.y = (signed short)(converted.size.height - (point.y - converted.origin.y));
         break;
     }
     case NSKeyDown:
@@ -87,12 +90,15 @@ bool ImGuiInit(void *window) {
 }
 
 // We use this function to gather platform specific data
-void ImguiNewFramePlatform(ImGuiIO &io) {
-    io.DisplaySize = ImVec2((float)800, (float)400);
+void ImGuiNewFramePlatform(ImGuiIO &io) {
+    NSWindow *window = (__bridge NSWindow *)io.ImeWindowHandle;
+    NSSize size = [[window contentView] frame].size;
+    CGFloat scale = [[window contentView] backingScaleFactor];
+    io.DisplaySize = ImVec2(size.width * scale, size.height * scale);
 
     // Setup time step
     double current_time = GetTimeNow();
-    io.DeltaTime = (float)(current_time - last_time);
+    io.DeltaTime = (float)(current_time - last_time) / 1000;
     last_time = current_time;
 
     // Read keyboard modifiers inputs

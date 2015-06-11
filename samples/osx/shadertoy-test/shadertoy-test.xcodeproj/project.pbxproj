@@ -11,11 +11,10 @@
 		ADBCFD891B23B2A800067F44 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFD881B23B2A800067F44 /* main.m */; };
 		ADBCFD8B1B23B2A800067F44 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADBCFD8A1B23B2A800067F44 /* Images.xcassets */; };
 		ADBCFD8E1B23B2A800067F44 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADBCFD8C1B23B2A800067F44 /* MainMenu.xib */; };
-		ADBCFDA51B23BEBF00067F44 /* GLView.m in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFDA41B23BEBF00067F44 /* GLView.m */; };
+		ADBCFDA51B23BEBF00067F44 /* GLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFDA41B23BEBF00067F44 /* GLView.mm */; };
 		ADBCFDB41B23BF8E00067F44 /* imgui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFDA81B23BF8E00067F44 /* imgui.cpp */; };
 		ADBCFDB51B23BF8E00067F44 /* ImguiHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFDAA1B23BF8E00067F44 /* ImguiHelper.cpp */; };
 		ADBCFDB61B23BF8E00067F44 /* ShadertoyTestHelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFDAC1B23BF8E00067F44 /* ShadertoyTestHelper.cpp */; };
-		ADBCFDB71B23BF8E00067F44 /* stb_vorbis.c in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFDB21B23BF8E00067F44 /* stb_vorbis.c */; };
 		ADBCFDB81B23BF8E00067F44 /* TestData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFDB31B23BF8E00067F44 /* TestData.cpp */; };
 		ADBCFDBA1B23BFA400067F44 /* libshadertoy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBCFDB91B23BFA400067F44 /* libshadertoy.a */; };
 		ADBCFDBD1B23C02E00067F44 /* ImguiPlatform.mm in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFDBC1B23C02E00067F44 /* ImguiPlatform.mm */; };
@@ -30,7 +29,7 @@
 		ADBCFD8A1B23B2A800067F44 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		ADBCFD8D1B23B2A800067F44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		ADBCFDA31B23BE7900067F44 /* GLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLView.h; sourceTree = "<group>"; };
-		ADBCFDA41B23BEBF00067F44 /* GLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLView.m; sourceTree = "<group>"; };
+		ADBCFDA41B23BEBF00067F44 /* GLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GLView.mm; sourceTree = "<group>"; };
 		ADBCFDA71B23BF8E00067F44 /* imconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = imconfig.h; path = ../../common/imconfig.h; sourceTree = "<group>"; };
 		ADBCFDA81B23BF8E00067F44 /* imgui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = imgui.cpp; path = ../../common/imgui.cpp; sourceTree = "<group>"; };
 		ADBCFDA91B23BF8E00067F44 /* imgui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = imgui.h; path = ../../common/imgui.h; sourceTree = "<group>"; };
@@ -42,7 +41,6 @@
 		ADBCFDAF1B23BF8E00067F44 /* stb_rect_pack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_rect_pack.h; path = ../../common/stb_rect_pack.h; sourceTree = "<group>"; };
 		ADBCFDB01B23BF8E00067F44 /* stb_textedit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_textedit.h; path = ../../common/stb_textedit.h; sourceTree = "<group>"; };
 		ADBCFDB11B23BF8E00067F44 /* stb_truetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stb_truetype.h; path = ../../common/stb_truetype.h; sourceTree = "<group>"; };
-		ADBCFDB21B23BF8E00067F44 /* stb_vorbis.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stb_vorbis.c; path = ../../common/stb_vorbis.c; sourceTree = "<group>"; };
 		ADBCFDB31B23BF8E00067F44 /* TestData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestData.cpp; path = ../../common/TestData.cpp; sourceTree = "<group>"; };
 		ADBCFDB91B23BFA400067F44 /* libshadertoy.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libshadertoy.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/shadertoy-czfirjremkptwgculwlkcuknhgja/Build/Products/Debug/libshadertoy.a"; sourceTree = "<group>"; };
 		ADBCFDBB1B23C01700067F44 /* ImguiPlatform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImguiPlatform.h; sourceTree = "<group>"; };
@@ -82,7 +80,7 @@
 		ADBCFD821B23B2A800067F44 /* shadertoy-test */ = {
 			isa = PBXGroup;
 			children = (
-				ADBCFDA41B23BEBF00067F44 /* GLView.m */,
+				ADBCFDA41B23BEBF00067F44 /* GLView.mm */,
 				ADBCFDA31B23BE7900067F44 /* GLView.h */,
 				ADBCFD851B23B2A800067F44 /* AppDelegate.h */,
 				ADBCFD861B23B2A800067F44 /* AppDelegate.m */,
@@ -118,7 +116,6 @@
 				ADBCFDAF1B23BF8E00067F44 /* stb_rect_pack.h */,
 				ADBCFDB01B23BF8E00067F44 /* stb_textedit.h */,
 				ADBCFDB11B23BF8E00067F44 /* stb_truetype.h */,
-				ADBCFDB21B23BF8E00067F44 /* stb_vorbis.c */,
 				ADBCFDB31B23BF8E00067F44 /* TestData.cpp */,
 			);
 			name = common;
@@ -193,10 +190,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADBCFDA51B23BEBF00067F44 /* GLView.m in Sources */,
+				ADBCFDA51B23BEBF00067F44 /* GLView.mm in Sources */,
 				ADBCFDB51B23BF8E00067F44 /* ImguiHelper.cpp in Sources */,
 				ADBCFDBD1B23C02E00067F44 /* ImguiPlatform.mm in Sources */,
-				ADBCFDB71B23BF8E00067F44 /* stb_vorbis.c in Sources */,
 				ADBCFDB41B23BF8E00067F44 /* imgui.cpp in Sources */,
 				ADBCFD891B23B2A800067F44 /* main.m in Sources */,
 				ADBCFD871B23B2A800067F44 /* AppDelegate.m in Sources */,
@@ -354,6 +350,7 @@
 				ADBCFD9F1B23B2A800067F44 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

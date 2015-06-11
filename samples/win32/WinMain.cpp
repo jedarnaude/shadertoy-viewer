@@ -34,15 +34,15 @@ ShadertoyOutputs outputs = {};
 ShadertoyConfig config = {};
 ShadertoyState state = {};
 
-float GetTimeNow() {
+double GetTimeNow() {
     static LARGE_INTEGER frequency;
     static BOOL has_frenquecy = QueryPerformanceFrequency(&frequency);
     if (has_frenquecy) {
         LARGE_INTEGER now;
         QueryPerformanceCounter(&now);
-        return (float)now.QuadPart / frequency.QuadPart;
+        return (double)now.QuadPart / frequency.QuadPart;
     }
-    return 0.0f;
+    return 0.0;
 }
 
 void StopAudio(void *sound) {

@@ -4,7 +4,7 @@
 #include "ImguiHelper.h"
 
 // Platform Functions
-typedef float(*TimeFunc)(void);
+typedef double(*TimeFunc)(void);
 typedef void(*StopAudioFunc)(void*);
 typedef void*(*InitAudioFunc)(int, int, int, int);
 
@@ -24,7 +24,7 @@ struct ShadertoyTest {
     const char *title;
     ShadertoyTestPass image;
     ShadertoyTestPass sound;
-    float start_time;
+    double start_time;
 };
 
 struct ShadertoyTestInfo {

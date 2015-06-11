@@ -17,7 +17,8 @@
     #elif TARGET_OS_IPHONE
         // iOS device
     #elif TARGET_OS_MAC
-        #include <OpenGL/gl3.h>
+        #include <OpenGL/gl.h>
+        #include <OpenGL/glext.h>
     #else
     #error Unsupported platform
     #endif
