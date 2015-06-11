@@ -54,7 +54,7 @@ void GetAudioInfo(int channel_id, int *size, void **data) {
 
 // TODO(jose): I don´t like this helper API
 void LoadTexture(ShadertoyState *state, char *filename[], ShadertoyPass pass, int channel_id) {
-    int comp;
+    int comp = STBI_rgb;
     Texture tex[6];
     for (int i = 0; i < 6; ++i) {
         tex[i].data = stbi_load(filename[i], &tex[i].width, &tex[i].height, &comp, 0);
@@ -67,7 +67,7 @@ void LoadTexture(ShadertoyState *state, char *filename[], ShadertoyPass pass, in
 }
 
 void LoadTexture(ShadertoyState *state, const char *filename, ShadertoyPass pass, int channel_id) {
-    int comp;
+    int comp = STBI_rgb;
     Texture tex;
     tex.data = stbi_load(filename, &tex.width, &tex.height, &comp, 0);
     tex.format = comp == STBI_rgb ? SHADERTOY_TEXTURE_FORMAT_RGB : SHADERTOY_TEXTURE_FORMAT_RGBA;
@@ -126,6 +126,9 @@ void LoadTestChannel(ShadertoyTestResource *channel_data, ShadertoyState *state,
 
         break;
     }
+    case SHADERTOY_RESOURCE_KEYBOARD:
+    case SHADERTOY_RESOURCE_NONE:
+        break;
     }
 }
 
