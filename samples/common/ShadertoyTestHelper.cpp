@@ -123,6 +123,7 @@ void LoadTestChannel(ShadertoyTestResource *channel_data, ShadertoyState *state,
         ShadertoyLoadAudio(state, &music, SHADERTOY_IMAGE_PASS, channel_id);
 
         outputs->music_data_param[channel_id] = init_audio(ogg_data->channels, ogg_data->sample_rate, 32, file->samples_count * sizeof(float));
+        stb_vorbis_close(ogg_data);
 
         break;
     }
@@ -298,5 +299,9 @@ void TestEnd() {
 }
 
 void TestShutdown() {
+    for (int i = 0; i < SHADERTOY_MAX_CHANNELS; ++i) {
+        free(audio_files[i].samples);
+    }
+    
     ImGuiShutdown();
 }

@@ -2,6 +2,7 @@
 
 #include <sys/time.h>
 #include "ShadertoyTestHelper.h"
+#include "AudioQueueHelper.h"
 
 @interface GLView () {
     ShadertoyTestInfo *test_info;
@@ -30,10 +31,11 @@ GetTimeNow() {
 }
 
 void StopAudio(void *sound) {
+    AudioQueueStop((AudioQueueUnit*)sound);
 }
 
 void* InitAudio(int channels, int sample_rate, int bits_per_sample, int buffer_size) {
-    return NULL;
+    return AudioQueueCreate(channels, sample_rate, bits_per_sample, buffer_size);
 }
 
 @implementation GLView
@@ -221,30 +223,30 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         ShadertoyRender(&state, &inputs, &view, &outputs);
 
         // Sound output
-//        if (outputs.sound_enabled) {
-//            DSoundUnit *unit = (DSoundUnit*)outputs.sound_data_param;
-//            DSoundPlay(unit, outputs.sound_buffer_size, (BYTE*)outputs.sound_next_buffer);
-//            inputs.sound_played_samples = DSoundGetPlayedSamples(unit);
-//        }
-//        if (outputs.sound_should_stop) {
-//            DSoundStop((DSoundUnit*)outputs.sound_data_param);
-//        }
-//
-//        // Audio outputs
-//        for (int i = 0; i < SHADERTOY_MAX_CHANNELS; ++i) {
-//            if (outputs.music_enabled_channel[i]) {
-//                DSoundUnit *audio = (DSoundUnit*)outputs.music_data_param[i];
-//                if (!DSoundIsPlaying(audio)) {
-//                    int size;
-//                    BYTE *data;
-//                    GetAudioInfo(i, &size, (void**)&data);
-//                    DSoundPlay(audio, size, data);
-//                }
-//                if (state.music_enabled_channel[i]) {
-//                    inputs.audio_played_samples[i] = DSoundGetPlayedSamples(audio);
-//                }
-//            }
-//        }
+        if (outputs.sound_enabled) {
+            AudioQueueUnit *unit = (AudioQueueUnit*)outputs.sound_data_param;
+            AudioQueuePlay(unit, outputs.sound_buffer_size, (unsigned char*)outputs.sound_next_buffer);
+            inputs.sound_played_samples = AudioQueueGetPlayedSamples(unit);
+        }
+        if (outputs.sound_should_stop) {
+            AudioQueueStop((AudioQueueUnit*)outputs.sound_data_param);
+        }
+
+        // Audio outputs
+        for (int i = 0; i < SHADERTOY_MAX_CHANNELS; ++i) {
+            if (outputs.music_enabled_channel[i]) {
+                AudioQueueUnit *audio = (AudioQueueUnit*)outputs.music_data_param[i];
+                if (!AudioQueueIsPlaying(audio)) {
+                    int size;
+                    uint8_t *data;
+                    GetAudioInfo(i, &size, (void**)&data);
+                    AudioQueuePlay(audio, size, data);
+                }
+                if (state.music_enabled_channel[i]) {
+                    inputs.audio_played_samples[i] = AudioQueueGetPlayedSamples(audio);
+                }
+            }
+        }
 
         GUITestOverlay(true, test, &state, &inputs);
     }

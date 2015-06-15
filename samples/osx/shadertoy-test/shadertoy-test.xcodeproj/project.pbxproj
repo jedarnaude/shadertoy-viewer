@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD69D5421B2B913200C1E52D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD69D5411B2B913200C1E52D /* AudioToolbox.framework */; };
 		ADBCFD871B23B2A800067F44 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFD861B23B2A800067F44 /* AppDelegate.m */; };
 		ADBCFD891B23B2A800067F44 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ADBCFD881B23B2A800067F44 /* main.m */; };
 		ADBCFD8B1B23B2A800067F44 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADBCFD8A1B23B2A800067F44 /* Images.xcassets */; };
@@ -21,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AD69D5401B2B5B2700C1E52D /* AudioQueueHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioQueueHelper.h; sourceTree = "<group>"; };
+		AD69D5411B2B913200C1E52D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		ADBCFD801B23B2A800067F44 /* shadertoy-test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "shadertoy-test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADBCFD841B23B2A800067F44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADBCFD851B23B2A800067F44 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -52,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD69D5421B2B913200C1E52D /* AudioToolbox.framework in Frameworks */,
 				ADBCFDBA1B23BFA400067F44 /* libshadertoy.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -62,6 +66,7 @@
 		ADBCFD771B23B2A800067F44 = {
 			isa = PBXGroup;
 			children = (
+				AD69D5411B2B913200C1E52D /* AudioToolbox.framework */,
 				ADBCFDB91B23BFA400067F44 /* libshadertoy.a */,
 				ADBCFDA61B23BF7F00067F44 /* common */,
 				ADBCFD821B23B2A800067F44 /* shadertoy-test */,
@@ -89,6 +94,7 @@
 				ADBCFD831B23B2A800067F44 /* Supporting Files */,
 				ADBCFDBB1B23C01700067F44 /* ImguiPlatform.h */,
 				ADBCFDBC1B23C02E00067F44 /* ImguiPlatform.mm */,
+				AD69D5401B2B5B2700C1E52D /* AudioQueueHelper.h */,
 			);
 			path = "shadertoy-test";
 			sourceTree = "<group>";
