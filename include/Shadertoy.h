@@ -77,6 +77,7 @@ extern "C" {
         SHADERTOY_RESOURCE_CUBE_MAP = 1 << 1,
         SHADERTOY_RESOURCE_KEYBOARD = 1 << 2,
         SHADERTOY_RESOURCE_MUSIC = 1 << 3,
+        SHADERTOY_RESOURCE_MICROPHONE = 1 << 4,
     } ResourceType;
 
 	typedef enum {
