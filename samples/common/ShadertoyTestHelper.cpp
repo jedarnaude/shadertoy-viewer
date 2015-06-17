@@ -1,6 +1,7 @@
 #include "ShadertoyTestHelper.h"
 
 #include "ImguiHelper.h"
+#include "DataPath.h"
 
 #pragma warning (push)
 #pragma warning( disable : 4456 )
@@ -75,26 +76,29 @@ void LoadTexture(ShadertoyState *state, const char *filename, ShadertoyPass pass
     stbi_image_free(tex.data);
 }
 
+void GetFilePath(char *dest, const char *filename) {
+    static const char *working_directory = GetDataPath();
+    strcat(dest, working_directory);
+    strcat(dest, GetPathSeparator());
+    strcat(dest, filename);
+}
+
 void LoadTestChannel(ShadertoyTestResource *channel_data, ShadertoyState *state, ShadertoyInputs *inputs, ShadertoyOutputs *outputs, ShadertoyPass pass, int channel_id) {
-    static const char *working_directory = "/Users/jedarnaude/Workspace/personal/shadertoy/samples/data/";
+
     ImageFile *image = &image_files[channel_id][pass];
     memset(image->filepath, 0, sizeof(image->filepath));
 
     switch (channel_data->type) {
     case SHADERTOY_RESOURCE_TEXTURE: {
-
-        strcpy(image->filepath, working_directory);
-        strcpy(image->filepath + strlen(image->filepath), channel_data->filename[0]);
+        GetFilePath(image->filepath, channel_data->filename[0]);
         LoadTexture(state, image->filepath, pass, channel_id);
-
         break;
     }
     case SHADERTOY_RESOURCE_CUBE_MAP: {
         char *cubemap_paths[6];
         for (int j = 0; j < 6; ++j) {
             cubemap_paths[j] = new char[1024];
-            strcpy(cubemap_paths[j], working_directory);
-            strcpy(cubemap_paths[j] + strlen(cubemap_paths[j]), channel_data->filename[j]);
+            GetFilePath(cubemap_paths[j], channel_data->filename[j]);
             if (j == 0) {
                 strcpy(image->filepath, cubemap_paths[j]);
             }
@@ -108,9 +112,7 @@ void LoadTestChannel(ShadertoyTestResource *channel_data, ShadertoyState *state,
     case SHADERTOY_RESOURCE_MUSIC: {
         AudioFile *file = &audio_files[channel_id];
         memset(file->filepath, 0, sizeof(file->filepath));
-
-        strcpy(file->filepath, working_directory);
-        strcpy(file->filepath + strlen(file->filepath), channel_data->filename[0]);
+        GetFilePath(file->filepath, channel_data->filename[0]);
 
         int ogg_error;
         stb_vorbis *ogg_data = stb_vorbis_open_filename(file->filepath, &ogg_error, NULL);
