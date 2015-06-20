@@ -105,6 +105,7 @@
     <ClInclude Include="..\..\common\stb_rect_pack.h" />
     <ClInclude Include="..\..\common\stb_textedit.h" />
     <ClInclude Include="..\..\common\stb_truetype.h" />
+    <ClInclude Include="..\DataPath.h" />
     <ClInclude Include="..\ImguiPlatform.h" />
     <ClInclude Include="..\XAudioHelper.h" />
   </ItemGroup>

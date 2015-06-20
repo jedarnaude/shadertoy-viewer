@@ -703,7 +703,9 @@ ShadertoyFree(ShadertoyState *state, ShadertoyInputs *inputs, ShadertoyOutputs *
     // TODO(jose): gl delete any resources that we did allocate.
     for (int j = 0; j < SHADERTOY_PASSES_COUNT; ++j) {
         for (int i = 0; i < SHADERTOY_MAX_CHANNELS; ++i) {
-            glDeleteTextures(1, &state->channels[j][i].id);
+            if (state->channels[j][i].type == SHADERTOY_RESOURCE_CUBE_MAP || state->channels[j][i].type == SHADERTOY_RESOURCE_TEXTURE) {
+                glDeleteTextures(1, &state->channels[j][i].id);
+            }
         }
     }
 

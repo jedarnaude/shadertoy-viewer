@@ -76,7 +76,7 @@ bool ImGuiInit(void *window) {
 }
 
 // We use this function to gather platform specific data
-void ImguiNewFramePlatform(ImGuiIO &io) {
+void ImGuiNewFramePlatform(ImGuiIO &io) {
     // Setup display size (every frame to accommodate for window resizing)
     HWND hWnd = (HWND)io.ImeWindowHandle;
     RECT rect;

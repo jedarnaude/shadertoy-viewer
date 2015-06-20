@@ -78,7 +78,7 @@ void LoadTexture(ShadertoyState *state, const char *filename, ShadertoyPass pass
 
 void GetFilePath(char *dest, const char *filename) {
     static const char *working_directory = GetDataPath();
-    strcat(dest, working_directory);
+    strcpy(dest, working_directory);
     strcat(dest, GetPathSeparator());
     strcat(dest, filename);
 }
