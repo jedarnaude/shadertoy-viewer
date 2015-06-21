@@ -147,6 +147,11 @@ extern "C" {
 
         // Audio sampled time
         int64_t audio_played_samples[SHADERTOY_MAX_CHANNELS];
+        
+        // Microphone
+        int micro_enabled;
+        void *micro_data_param;   // Pointer to platform specific data identifier for audio if needed
+        ShadertoyAudioSample *micro_samples;
     } ShadertoyInputs;
 
     /**
@@ -182,7 +187,8 @@ extern "C" {
         int keyboard_enable;
         int keyboard_enabled_channel;
 
-        // ShadertoyAudio
+        // Audio
+        // TODO(jose): rename music to audio
         int music_enabled;
         int music_enabled_channel[SHADERTOY_MAX_CHANNELS];
 
@@ -198,9 +204,14 @@ extern "C" {
         ShadertoyResource sound_resource;
         ShadertoyResource sound_fbo;
         ShadertoyAudioSample *sound_buffers[SHADERTOY_SOUND_BUFFERS_COUNT];
+        
+        // Microphone
+        int micro_enabled;
+        int micro_enabled_channel;
 
         // Output link
         // TODO(jose): Is this a good internal dependency?
+        ShadertoyInputs* inputs;
         ShadertoyOutputs* outputs;
     } ShadertoyState;
 

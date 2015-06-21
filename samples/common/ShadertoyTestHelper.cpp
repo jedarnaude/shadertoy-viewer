@@ -45,7 +45,8 @@ static ImageFile image_files[SHADERTOY_MAX_CHANNELS][SHADERTOY_PASSES_COUNT];
 static AudioFile audio_files[SHADERTOY_MAX_CHANNELS];
 static TimeFunc time_now = DummyTime;
 static StopAudioFunc stop_audio = DummyStopAudio;
-static InitAudioFunc init_audio = DummyInitAudio;
+static InitAudioOutputFunc init_audio_output = DummyInitAudio;
+static InitAudioInputFunc init_audio_input = DummyInitAudio;
 
 void GetAudioInfo(int channel_id, int *size, void **data) {
     AudioFile *target = &audio_files[channel_id];
@@ -124,7 +125,7 @@ void LoadTestChannel(ShadertoyTestResource *channel_data, ShadertoyState *state,
         ShadertoyAudio music = { &inputs->audio_played_samples[channel_id], &file->samples, (int)ogg_data->sample_rate, ogg_data->channels, file->samples_count / ogg_data->channels };
         ShadertoyLoadAudio(state, &music, SHADERTOY_IMAGE_PASS, channel_id);
 
-        outputs->music_data_param[channel_id] = init_audio(ogg_data->channels, ogg_data->sample_rate, 32, file->samples_count * sizeof(float));
+        outputs->music_data_param[channel_id] = init_audio_output(ogg_data->channels, ogg_data->sample_rate, 32, file->samples_count * sizeof(float));
         stb_vorbis_close(ogg_data);
 
         break;
@@ -169,7 +170,7 @@ void LoadTest(ShadertoyTest *test, ShadertoyConfig *config, ShadertoyState *stat
         }
         ShadertoyLoadShader(state, test->sound.shader, sound_resources[0], sound_resources[1], sound_resources[2], sound_resources[3], SHADERTOY_SOUND_PASS);
         const int double_buffering = 2;
-        outputs->sound_data_param = init_audio(2, 44100, 32, SHADERTOY_SOUND_BLOCK_SIZE * sizeof(float) * SHADERTOY_SOUND_AUDIO_CHANNELS * double_buffering);
+        outputs->sound_data_param = init_audio_output(2, 44100, 32, SHADERTOY_SOUND_BLOCK_SIZE * sizeof(float) * SHADERTOY_SOUND_AUDIO_CHANNELS * double_buffering);
     }
 
     test->start_time = time_now();
@@ -284,10 +285,11 @@ void GUITestOverlay(bool show_overlay, ShadertoyTest *test, ShadertoyState *stat
 
 // Forward declare as test data contains this
 ShadertoyTestInfo* GetTestSuite();
-ShadertoyTestInfo* TestInit(TimeFunc time_func, StopAudioFunc stop_audio_func, InitAudioFunc init_audio_func, void *window) {
+ShadertoyTestInfo* TestInit(TimeFunc time_func, StopAudioFunc stop_audio_func, InitAudioOutputFunc init_audio_output_func, InitAudioInputFunc init_audio_input_func, void *window) {
     time_now = time_func;
     stop_audio = stop_audio_func;
-    init_audio = init_audio_func;
+    init_audio_output = init_audio_output_func;
+    init_audio_input = init_audio_input_func;
     ImGuiInit(window);
     return GetTestSuite();
 }
