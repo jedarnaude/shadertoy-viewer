@@ -19,6 +19,7 @@
 #define FFT_SIZE 2048
 static kiss_fft_cpx fft_in[FFT_SIZE];
 static kiss_fft_cpx fft_out[FFT_SIZE];
+static float magnitudes[FFT_SIZE / 2];
 
 static GLubyte sound_readpixels_buffer[SHADERTOY_SOUND_BLOCK_SIZE * 4];
 
@@ -427,7 +428,6 @@ ProcessAudio(ShadertoyAudio *audio, uint8_t *out) {
 	k = Min(1.0, k);
 
 	// Convert the analysis data from complex to magnitude and average with the previous result.
-	static float magnitudes[FFT_SIZE / 2] = {};
 	for (size_t i = 0; i < FFT_SIZE / 2; ++i) {
 		double modulus = sqrt(fft_out[i].r * fft_out[i].r + fft_out[i].i * fft_out[i].i);
 		double scalar_magnitude = modulus * modulo_scale;
@@ -451,7 +451,7 @@ ProcessAudio(ShadertoyAudio *audio, uint8_t *out) {
 
 	// Waveform
 	// TODO(jose): review seems not correct
-    int end_waveform = 512 + (fft_size / 4);
+    int end_waveform = 512 + (FFT_SIZE / 4);
 	for (int i = 512; i < end_waveform; ++i) {
 		// Buffer access is protected due to modulo operation.
 		float value = pcm_location[i - 512];
@@ -523,11 +523,13 @@ RenderImage(ShadertoyState *state, ShadertoyInputs *in, ShadertoyView *view) {
     }
 
     if (state->micro_enabled) {
+        static int64_t INPUT_PLAYED_SAMPLES = 0;
         ShadertoyResource* micro_resource = &channels[state->micro_enabled_channel];
         ShadertoyAudio audio = {};
         audio.data = (float**)&in->micro_samples;
         audio.channel_count = 2;
         audio.total_samples = 512;
+        audio.played_samples = &INPUT_PLAYED_SAMPLES;
         ProcessAudio(&audio, texture_data);
         BlitToTexture(micro_resource, texture_data);
     }
@@ -706,6 +708,10 @@ ShadertoyInit(ShadertoyConfig *config, ShadertoyState *state, ShadertoyInputs *i
     
     // Clear color
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    
+    // Global state cleanup
+    // TODO(embed global into state)
+    memset(magnitudes, 0, sizeof(magnitudes));
 
 	return result;
 }
@@ -807,7 +813,12 @@ ShadertoyLoadShader(ShadertoyState *state, const char *source, ResourceType chan
         if (need_microphone) {
             state->micro_enabled = 1;
             state->micro_enabled_channel = GetFirstUsageChannel(SHADERTOY_RESOURCE_MICROPHONE, channels);
+            state->inputs->micro_enabled =  1;
             state->inputs->micro_samples = new ShadertoyAudioSample[SHADERTOY_SOUND_BLOCK_SIZE];
+            
+
+            Texture texture = { SHADERTOY_TEXTURE_FORMAT_LUMINANCE, SHADERTOY_TEXTURE_FILTER_NEAREST , SHADERTOY_MICROPHONE_TEXTURE_WIDTH, 2, NULL };
+            ShadertoyLoadTexture(state, &texture, pass, state->micro_enabled_channel);            
         }
     }
 

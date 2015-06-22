@@ -10,6 +10,7 @@ typedef struct {
     AudioStreamBasicDescription format;
     AudioQueueRef queue;
     AudioQueueBufferRef buffers[AUDIOQUEUE_BUFFERS_COUNT];
+    float *input_buffer_data;
     int buffer_count;
     bool is_running;
 } AudioQueueUnit;
@@ -21,6 +22,9 @@ static void AudioQueueFeedOutput(void *custom_data, AudioQueueRef queue, AudioQu
 
 static void AudioQueueFeedInput(void *custom_data, AudioQueueRef queue, AudioQueueBufferRef buffer, const AudioTimeStamp *start_time, UInt32 number_packets_descriptions, const AudioStreamPacketDescription *packets_descriptions ) {
     // We don't feed buffer the normal AQ way.
+    AudioQueueUnit *unit = (AudioQueueUnit*)custom_data;
+    memcpy(unit->input_buffer_data, buffer->mAudioData, buffer->mAudioDataByteSize);
+    AudioQueueEnqueueBuffer(queue, buffer, 0, NULL);
 }
 
 AudioQueueUnit*
@@ -37,15 +41,18 @@ AudioQueueCreateInput(int num_channels, int sample_rate, int bits_per_sample, in
     unit->format.mFramesPerPacket  = 1;
     unit->format.mBytesPerPacket   = unit->format.mBytesPerFrame * unit->format.mFramesPerPacket;
     unit->format.mReserved         = 0;
-    AudioQueueNewInput(&unit->format, AudioQueueFeedInput, NULL, NULL, NULL, 0, &unit->queue);
+    AudioQueueNewInput(&unit->format, AudioQueueFeedInput, unit, NULL, NULL, 0, &unit->queue);
     
     for (int i = 0; i < AUDIOQUEUE_BUFFERS_COUNT; ++i) {
         AudioQueueAllocateBuffer(unit->queue, buffer_size, unit->buffers + i);
         AudioQueueEnqueueBuffer(unit->queue, unit->buffers[i], 0, NULL);
     }
     
+    unit->input_buffer_data = new float[buffer_size];
+    
     return unit;
 }
+
 AudioQueueUnit*
 AudioQueueCreateOutput(int num_channels, int sample_rate, int bits_per_sample, int buffer_size) {
     AudioQueueUnit *unit = new AudioQueueUnit();
@@ -67,7 +74,7 @@ AudioQueueCreateOutput(int num_channels, int sample_rate, int bits_per_sample, i
 
 void
 AudioQueueRecord(AudioQueueUnit *unit) {
-    if (unit->is_running) {
+    if (!unit->is_running) {
         AudioQueueStart(unit->queue, NULL);
         unit->is_running = true;
     }
@@ -108,6 +115,7 @@ AudioQueueStop(AudioQueueUnit *unit) {
 void
 AudioQueueFree(AudioQueueUnit *unit) {
     AudioQueueDispose(unit->queue, true);
+    delete [] unit->input_buffer_data;
     delete unit;
 }
 
@@ -115,13 +123,19 @@ int
 AudioQueueGetPlayedSamples(AudioQueueUnit *unit) {
     AudioTimeStamp time_stamp;
     AudioQueueGetCurrentTime(unit->queue, NULL, &time_stamp, NULL);
-    return time_stamp.mSampleTime;
+    return time_stamp.mSampleTime < 0.0f ? 0 : time_stamp.mSampleTime;
 }
 
 bool
 AudioQueueIsPlaying(AudioQueueUnit *unit) {
     return unit->is_running;
 }
+
+float*
+AudioQueueGetInputData(AudioQueueUnit *unit) {
+    return unit->input_buffer_data;
+}
+
 
 
 #endif

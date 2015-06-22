@@ -41,6 +41,7 @@ void* DummyInitAudio(int, int, int, int) {
 }
 
 // Global data for test
+static ShadertoyAudio audio_data[SHADERTOY_MAX_CHANNELS];
 static ImageFile image_files[SHADERTOY_MAX_CHANNELS][SHADERTOY_PASSES_COUNT];
 static AudioFile audio_files[SHADERTOY_MAX_CHANNELS];
 static TimeFunc time_now = DummyTime;
@@ -122,12 +123,17 @@ void LoadTestChannel(ShadertoyTestResource *channel_data, ShadertoyState *state,
         file->samples = (float*)malloc(sizeof(float) * file->samples_count);
         stb_vorbis_get_samples_float_interleaved(ogg_data, ogg_data->channels, file->samples, file->samples_count);
 
-        ShadertoyAudio music = { &inputs->audio_played_samples[channel_id], &file->samples, (int)ogg_data->sample_rate, ogg_data->channels, file->samples_count / ogg_data->channels };
-        ShadertoyLoadAudio(state, &music, SHADERTOY_IMAGE_PASS, channel_id);
+        audio_data[channel_id] = { &inputs->audio_played_samples[channel_id], &file->samples, (int)ogg_data->sample_rate, ogg_data->channels, file->samples_count / ogg_data->channels };
+        ShadertoyLoadAudio(state, audio_data + channel_id, SHADERTOY_IMAGE_PASS, channel_id);
 
         outputs->music_data_param[channel_id] = init_audio_output(ogg_data->channels, ogg_data->sample_rate, 32, file->samples_count * sizeof(float));
         stb_vorbis_close(ogg_data);
 
+        break;
+    }
+    case SHADERTOY_RESOURCE_MICROPHONE: {
+        // 512 * sizeof(float) == FFT sampling data, so should be fine to use
+        inputs->micro_data_param = init_audio_input(2, 44100, 32, 2048 * sizeof(float));
         break;
     }
     case SHADERTOY_RESOURCE_KEYBOARD:
@@ -305,6 +311,7 @@ void TestEnd() {
 void TestShutdown() {
     for (int i = 0; i < SHADERTOY_MAX_CHANNELS; ++i) {
         free(audio_files[i].samples);
+        memset(audio_data, 0, sizeof(audio_data));
     }
     
     ImGuiShutdown();

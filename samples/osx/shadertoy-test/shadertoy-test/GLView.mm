@@ -39,7 +39,7 @@ void* InitAudioOutput(int channels, int sample_rate, int bits_per_sample, int bu
 }
 
 void* InitAudioInput(int channels, int sample_rate, int bits_per_sample, int buffer_size) {
-    return AudioQueueCreateOutput(channels, sample_rate, bits_per_sample, buffer_size);
+    return AudioQueueCreateInput(channels, sample_rate, bits_per_sample, buffer_size);
 }
 
 @implementation GLView
@@ -226,7 +226,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         // Microphone
         if (inputs.micro_enabled) {
             // Get data
-            AudioQueueRecord((AudioQueueUnit*)inputs.micro_data_param);
+            AudioQueueUnit *unit = (AudioQueueUnit*)inputs.micro_data_param;
+            AudioQueueRecord(unit);
+            inputs.micro_samples = (ShadertoyAudioSample*)AudioQueueGetInputData(unit);
         }
 
         // Render
