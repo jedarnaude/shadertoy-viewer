@@ -6,7 +6,8 @@
 // Platform Functions
 typedef double(*TimeFunc)(void);
 typedef void(*StopAudioFunc)(void*);
-typedef void*(*InitAudioFunc)(int, int, int, int);
+typedef void*(*InitAudioOutputFunc)(int, int, int, int);
+typedef void*(*InitAudioInputFunc)(int, int, int, int);
 
 // Types
 struct ShadertoyTestResource {
@@ -46,7 +47,7 @@ bool GUITestSelection(bool show_selection, ShadertoyTestInfo *info, ShadertoyTes
 void GUITestOverlay(bool show_overlay, ShadertoyTest *test, ShadertoyState *state, ShadertoyInputs *inputs);
 
 // Test lifecycle
-ShadertoyTestInfo* TestInit(TimeFunc time_func, StopAudioFunc stop_audio_func, InitAudioFunc init_audio_func, void *window);
+ShadertoyTestInfo* TestInit(TimeFunc time_func, StopAudioFunc stop_audio_func, InitAudioOutputFunc init_audio_output_func, InitAudioInputFunc init_audio_input_func, void *window);
 void TestBegin();
 void TestEnd();
 void TestShutdown();

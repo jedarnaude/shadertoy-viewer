@@ -34,8 +34,12 @@ void StopAudio(void *sound) {
     AudioQueueStop((AudioQueueUnit*)sound);
 }
 
-void* InitAudio(int channels, int sample_rate, int bits_per_sample, int buffer_size) {
-    return AudioQueueCreate(channels, sample_rate, bits_per_sample, buffer_size);
+void* InitAudioOutput(int channels, int sample_rate, int bits_per_sample, int buffer_size) {
+    return AudioQueueCreateOutput(channels, sample_rate, bits_per_sample, buffer_size);
+}
+
+void* InitAudioInput(int channels, int sample_rate, int bits_per_sample, int buffer_size) {
+    return AudioQueueCreateInput(channels, sample_rate, bits_per_sample, buffer_size);
 }
 
 @implementation GLView
@@ -101,7 +105,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
     memset(&config, 0, sizeof(config));
     memset(&state, 0, sizeof(state));
     
-    test_info = TestInit(GetTimeNow, StopAudio, InitAudio, (__bridge void*)[self window]);
+    test_info = TestInit(GetTimeNow, StopAudio, InitAudioOutput, InitAudioInput, (__bridge void*)[self window]);
     test = NULL;
 }
 
@@ -218,6 +222,14 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         inputs.resolution.y = resolution.size.height;
 
         // Mouse and keyboard inputs are processed within GLView methods
+        
+        // Microphone
+        if (inputs.micro_enabled) {
+            // Get data
+            AudioQueueUnit *unit = (AudioQueueUnit*)inputs.micro_data_param;
+            AudioQueueRecord(unit);
+            inputs.micro_samples = (ShadertoyAudioSample*)AudioQueueGetInputData(unit);
+        }
 
         // Render
         ShadertoyRender(&state, &inputs, &view, &outputs);

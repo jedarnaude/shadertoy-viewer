@@ -19,6 +19,7 @@
 #define FFT_SIZE 2048
 static kiss_fft_cpx fft_in[FFT_SIZE];
 static kiss_fft_cpx fft_out[FFT_SIZE];
+static float magnitudes[FFT_SIZE / 2];
 
 static GLubyte sound_readpixels_buffer[SHADERTOY_SOUND_BLOCK_SIZE * 4];
 
@@ -427,7 +428,6 @@ ProcessAudio(ShadertoyAudio *audio, uint8_t *out) {
 	k = Min(1.0, k);
 
 	// Convert the analysis data from complex to magnitude and average with the previous result.
-	static float magnitudes[FFT_SIZE / 2] = {};
 	for (size_t i = 0; i < FFT_SIZE / 2; ++i) {
 		double modulus = sqrt(fft_out[i].r * fft_out[i].r + fft_out[i].i * fft_out[i].i);
 		double scalar_magnitude = modulus * modulo_scale;
@@ -451,7 +451,7 @@ ProcessAudio(ShadertoyAudio *audio, uint8_t *out) {
 
 	// Waveform
 	// TODO(jose): review seems not correct
-    int end_waveform = 512 + (fft_size / 4);
+    int end_waveform = 512 + (FFT_SIZE / 4);
 	for (int i = 512; i < end_waveform; ++i) {
 		// Buffer access is protected due to modulo operation.
 		float value = pcm_location[i - 512];
@@ -478,21 +478,21 @@ ProcessSound(int block_offset, int sample_rate, ShadertoyShader *shader, Shadert
 }
 
 /**
- * Gets the first channel that has a keyboard type event. Shadertoy does not
- * support multiple keyboards at the moment.
+ * Gets the first channel that has the selected resource. This is useful for 
+ * resources that should not be supported on multiple inputs.
  * @param[in]   channels    shadertoy channels to be scan
- * @return  returns the first channel using keyboard, 0 if not found. 
- * @warning invalid channel might be returneded if there is no keyboard 
+ * @param[in]   type        shadertoy type for the resource to look for
+ * @return  returns the first channel using type resource, -1 if not found.
  */
 static int
-GetKeyboardChannel(ResourceType channels[SHADERTOY_MAX_CHANNELS]) {
+GetFirstUsageChannel(ResourceType type, ResourceType channels[SHADERTOY_MAX_CHANNELS]) {
     for (int i = 0; i < SHADERTOY_MAX_CHANNELS; ++i) {
-        if (channels[i] == SHADERTOY_RESOURCE_KEYBOARD) {
+        if (channels[i] == type) {
             return i;
         }
     }
 
-    return 0;
+    return -1;
 }
 
 static int
@@ -504,6 +504,7 @@ static void
 RenderImage(ShadertoyState *state, ShadertoyInputs *in, ShadertoyView *view) {
     ShadertoyShader *shader = &state->shader[SHADERTOY_IMAGE_PASS];
     ShadertoyResource *channels = state->channels[SHADERTOY_IMAGE_PASS];
+	uint8_t texture_data[1024];
 
     glBindFramebuffer(GL_FRAMEBUFFER, state->image_fbo.id);
     glViewport(view->min.x, view->min.y, (view->max.x - view->min.x), (view->max.y - view->min.y));
@@ -521,8 +522,19 @@ RenderImage(ShadertoyState *state, ShadertoyInputs *in, ShadertoyView *view) {
         BlitToTexture(keyboard_resource,  in->keyboard.state);
     }
 
+    if (state->micro_enabled) {
+        static int64_t INPUT_PLAYED_SAMPLES = 0;
+        ShadertoyResource* micro_resource = &channels[state->micro_enabled_channel];
+        ShadertoyAudio audio = {};
+        audio.data = (float**)&in->micro_samples;
+        audio.channel_count = 2;
+        audio.total_samples = 512;
+        audio.played_samples = &INPUT_PLAYED_SAMPLES;
+        ProcessAudio(&audio, texture_data);
+        BlitToTexture(micro_resource, texture_data);
+    }
+
 	glEnable(GL_TEXTURE_2D);
-	uint8_t texture_data[1024];
 	for (int i = 0; i < SHADERTOY_MAX_CHANNELS; ++i) {
         if (state->music_enabled_channel[i]) {
             ShadertoyAudio *audio = &channels[i].audio;
@@ -530,7 +542,7 @@ RenderImage(ShadertoyState *state, ShadertoyInputs *in, ShadertoyView *view) {
 			ProcessAudio(audio, texture_data);
 			BlitToTexture(&channels[i], texture_data);
         }
-
+        
         ShadertoyResource* res = &channels[i];
 		if (res->id) {
 			GLenum texture_target = GL_TEXTURE_2D;
@@ -540,6 +552,7 @@ RenderImage(ShadertoyState *state, ShadertoyInputs *in, ShadertoyView *view) {
 				texture_target = GL_TEXTURE_CUBE_MAP;
 			case SHADERTOY_RESOURCE_TEXTURE:
             case SHADERTOY_RESOURCE_KEYBOARD:
+            case SHADERTOY_RESOURCE_MICROPHONE:
             case SHADERTOY_RESOURCE_MUSIC:
                 glActiveTexture(GL_TEXTURE0 + i);
 				glBindTexture(texture_target, res->id);
@@ -688,12 +701,17 @@ ShadertoyInit(ShadertoyConfig *config, ShadertoyState *state, ShadertoyInputs *i
     state->sound_audio_channels = config->sound_audio_channels != 0 ? config->sound_audio_channels : SHADERTOY_SOUND_AUDIO_CHANNELS;
 
     state->outputs = outputs;
+    state->inputs = inputs;
 
     // TODO(jose): OpenGL extensions specifics
     state->image_fbo.id = 0;
     
     // Clear color
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    
+    // Global state cleanup
+    // TODO(embed global into state)
+    memset(magnitudes, 0, sizeof(magnitudes));
 
 	return result;
 }
@@ -711,6 +729,10 @@ ShadertoyFree(ShadertoyState *state, ShadertoyInputs *inputs, ShadertoyOutputs *
 
     if (state->sound_enable) {
         delete[] state->sound_buffers[0];
+    }
+    
+    if (state->micro_enabled) {
+        delete[] inputs->micro_samples;
     }
 
     *state = {};
@@ -761,6 +783,7 @@ ShadertoyLoadShader(ShadertoyState *state, const char *source, ResourceType chan
     if (pass == SHADERTOY_IMAGE_PASS) {
         int need_keyboard = NeedsResourceType(channels, SHADERTOY_RESOURCE_KEYBOARD);
         int need_music = NeedsResourceType(channels, SHADERTOY_RESOURCE_MUSIC);
+        int need_microphone = NeedsResourceType(channels, SHADERTOY_RESOURCE_MICROPHONE);
 
         state->texture_enable_2d = NeedsResourceType(channels, SHADERTOY_RESOURCE_TEXTURE);
         state->texture_enable_2d |= NeedsResourceType(channels, SHADERTOY_RESOURCE_CUBE_MAP);
@@ -769,15 +792,16 @@ ShadertoyLoadShader(ShadertoyState *state, const char *source, ResourceType chan
         // Sample rate is a fixed data
         state->sound_sample_rate = state->sound_frequency;
 
-        // Special inputs
+        // Keyboard input
         if (need_keyboard) {
             state->keyboard_enable = 1;
-            state->keyboard_enabled_channel = GetKeyboardChannel(channels);
+            state->keyboard_enabled_channel = GetFirstUsageChannel(SHADERTOY_RESOURCE_KEYBOARD, channels);
 
             Texture texture = { SHADERTOY_TEXTURE_FORMAT_LUMINANCE, SHADERTOY_TEXTURE_FILTER_NEAREST , SHADERTOY_KEYMAPS_COUNT, 2, NULL };
             ShadertoyLoadTexture(state, &texture, pass, state->keyboard_enabled_channel);
         }
 
+        // Music input
         if (need_music) {
             state->music_enabled = 1;
             for (int i = 0; i < SHADERTOY_MAX_CHANNELS; ++i) {
@@ -785,6 +809,18 @@ ShadertoyLoadShader(ShadertoyState *state, const char *source, ResourceType chan
                     state->music_enabled_channel[i] = 1;
                 }
             }
+        }
+        
+        // Microphone input
+        if (need_microphone) {
+            state->micro_enabled = 1;
+            state->micro_enabled_channel = GetFirstUsageChannel(SHADERTOY_RESOURCE_MICROPHONE, channels);
+            state->inputs->micro_enabled =  1;
+            state->inputs->micro_samples = new ShadertoyAudioSample[SHADERTOY_SOUND_BLOCK_SIZE];
+            
+
+            Texture texture = { SHADERTOY_TEXTURE_FORMAT_LUMINANCE, SHADERTOY_TEXTURE_FILTER_NEAREST , SHADERTOY_MICROPHONE_TEXTURE_WIDTH, 2, NULL };
+            ShadertoyLoadTexture(state, &texture, pass, state->micro_enabled_channel);            
         }
     }
 
